@@ -1,0 +1,8 @@
+User-agent: *
+
+Allow: /ads.txt/
+
+Disallow: /login/
+Disallow: /postagens/
+
+Sitemap:
