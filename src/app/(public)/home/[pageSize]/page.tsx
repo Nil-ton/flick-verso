@@ -10,6 +10,8 @@ type props = {
     }
 }
 
+export const revalidate = 60 * 30
+
 export default async function Home({ params }: props) {
     const posts = await getData<IPosts[]>('posts', 1, Number(params.pageSize))
     const lastPosts = posts?.slice(0, 3)

@@ -1,9 +1,10 @@
 import { IPosts } from "@/app/type";
 import { Card } from "@/components/Card";
 import { LastNews } from "@/components/LastNews";
-import { getData } from "@/hooks/getData";
 import { getDataWithFilter } from "@/hooks/getDataWithFilter";
 import { where } from "firebase/firestore";
+
+export const revalidate = 60 * 30
 
 export default async function Home() {
     const page = 1
