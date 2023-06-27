@@ -22,15 +22,15 @@ export async function Card({ post }: props) {
                 <img
                     src={post.thumbnail}
                     alt={post.title}
-                    className='lg:w-[400px] w-full h-[200px] object-cover aspect-video'
+                    className='w-full lg:w-[400px] h-[250px]  object-cover aspect-video'
                     loading='lazy'
                 />
                 <Link href={post.uid}>
-                    <span className='w-full absolute top-0 left-0 bg-gradient-to-b from-transparent to-[rgba(1,1,1,.8)] lg:w-[400px] h-[200px] block' />
+                    <span className='w-full lg:w-[400px] h-[250px] absolute top-0 left-0 bg-gradient-to-b from-transparent to-[rgba(1,1,1,.8)] block' />
                 </Link>
             </picture>
 
-            <div className="bg-white p-5 w-full rounded">
+            <div className="bg-white p-5 w-full rounded h-[250px]">
                 <Link href={post.uid}>
                     <span className="text-2xl font-bold block mb-2 cursor-pointer hover:underline">{post.title}</span>
                 </Link>

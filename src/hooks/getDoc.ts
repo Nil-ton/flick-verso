@@ -23,7 +23,7 @@ export async function getDocData<T>(collection: string, id?: string | null, auth
         const dateCreatedAt = new Date(timestampCreatedAt?.toDate().toUTCString())
         const dateUpdateAt = new Date(timestampUpdateAt?.toDate().toUTCString())
         const createdAt = `${dateCreatedAt.getDate()}/${dateCreatedAt.getMonth() + 1}/${dateCreatedAt.getFullYear()} ${dateCreatedAt.getHours()}:${dateCreatedAt.getMinutes()}:${dateCreatedAt.getSeconds()}`;
-        const updatedAt = timestampUpdateAt && `${dateUpdateAt.getDate()}/${dateUpdateAt.getMonth() + 1}/${dateUpdateAt.getFullYear()} ${dateUpdateAt.getHours()}:${dateUpdateAt.getMinutes()}:${dateUpdateAt.getSeconds()} • Atualizado ${getTimeSinceUpdate(dateUpdateAt as unknown as string)}`;;
+        const updatedAt = timestampUpdateAt && `Atualizado ${getTimeSinceUpdate(dateUpdateAt as unknown as string)}`;;
         return { ...documentSnapshot.data(), createdAt, updatedAt } as T;
     } else {
         return null
