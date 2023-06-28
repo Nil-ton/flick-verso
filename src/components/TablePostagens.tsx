@@ -89,7 +89,7 @@ export function TablePostagens({ posts }: props) {
                                     Editar
                                 </Link>
                                 <Link
-                                    href={item.uid}
+                                    href={`/preview/${item.uid}`}
                                     className="text-blue-500"
                                 >
                                     Visualizar
