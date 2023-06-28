@@ -115,7 +115,7 @@ export default function Postagens({ params }: props) {
                     const subcolecaoRef = doc(db, "posts", `${idCollection}/nota/${auth.currentUser?.uid}`);
                     await setDoc(subcolecaoRef, { note: data.note?.value });
                 }
-                data.sessions.forEach(async (session) => {
+                [...data.sessions, '/'].forEach(async (session) => {
                     const res = await (await fetch(`/api/revalidate/${session}`)).json()
                     console.log(res)
                 })
