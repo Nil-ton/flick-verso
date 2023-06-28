@@ -116,7 +116,7 @@ export default function Postagens({ params }: props) {
                     await setDoc(subcolecaoRef, { note: data.note?.value });
                 }
                 data.sessions.forEach(async (session) => {
-                    const res = (await fetch(`/${session}`)).json()
+                    const res = await (await fetch(`/api/revalidate/${session}`)).json()
                     console.log(res)
                 })
             }

@@ -89,7 +89,7 @@ export function TablePostagens({ posts }: props) {
                                     Editar
                                 </Link>
                                 <Link
-                                    href={replaceSpacesWithHyphens(item.title) as string}
+                                    href={item.uid}
                                     className="text-blue-500"
                                 >
                                     Visualizar
