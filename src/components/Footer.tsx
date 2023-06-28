@@ -8,7 +8,7 @@ export function Footer() {
         { slug: '/politica-privacidade', title: 'Política de Privacidade' },
     ]
     return (
-        <footer className="h-[150px] p-5 flex justify-between m-[0_auto] mt-10">
+        <footer className="h-[150px] p-5 lg:flex justify-between m-[0_auto] mt-10">
             <span className="uppercase font-bold text-2xl">
                 Flick <span className="text-[red]">Verso™</span>
             </span>
