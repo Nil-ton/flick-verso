@@ -4,6 +4,7 @@ import { LastNews } from "@/components/LastNews";
 import { getDataWithFilter } from "@/hooks/getDataWithFilter";
 import { where } from "firebase/firestore";
 import { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = {
     title: 'Flick Verso | Animes',
@@ -27,6 +28,16 @@ export default async function Home() {
             <LastNews posts={lastPosts} />
 
             {slicePosts?.map((item) => <Card key={item.uid} post={item} />)}
+
+            {posts?.length === 10 && (
+                <Link
+                    aria-label="Ver Mais"
+                    href={'/animes/' + 2}
+                    className="cursor-pointer inline-block bg-gray-200 rounded-full text-center text-lg px-3 py-1 font-semibold text-gray-700 mr-2 mb-2"
+                >
+                    Ver Mais
+                </Link>
+            )}
         </div >
     )
 }
