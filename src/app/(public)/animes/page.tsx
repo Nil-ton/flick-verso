@@ -6,11 +6,11 @@ import { where } from "firebase/firestore";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: 'Flick Verso',
+    title: 'Flick Verso | Animes',
     description: 'Desbrave o incrível universo dos animes no FlickVerso. De clássicos intemporais a emocionantes lançamentos, oferecemos análises aprofundadas, curiosidades e recomendações exclusivas para os fãs de animação japonesa. Encontre o seu próximo anime favorito, mergulhe em mundos fantásticos e compartilhe sua paixão com a comunidade de fãs que ama tanto quanto você!',
     keywords: "animes, animação japonesa, análises, curiosidades, recomendações, fãs de anime",
     openGraph: {
-        images: '/favicon.ico',
+        images: '/favicon.png',
     },
 }
 
