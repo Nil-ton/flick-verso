@@ -1,6 +1,8 @@
 User-agent: *
-
+Allow: /
 Allow: /ads.txt/
-
 Disallow: /login/
 Disallow: /postagens/
+Disallow: /api/
+
+Sitemap: https://flickverso.com.br/sitemap
