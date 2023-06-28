@@ -20,7 +20,7 @@ export async function getDataWithFilter<T>(collectionName: string, { page = 1, p
         querySnapshot?.forEach(element => {
             const timestampCreatedAt = element.data().createdAt as Timestamp;
             const dateCreatedAt = new Date(timestampCreatedAt.toDate().toUTCString())
-            const createdAt = `${dateCreatedAt.getDate()}/${dateCreatedAt.getMonth() + 1}/${dateCreatedAt.getFullYear()} ${dateCreatedAt.getHours()}:${dateCreatedAt.getMinutes()}:${dateCreatedAt.getSeconds()}`;
+            const createdAt = `${dateCreatedAt.getDate()}/${dateCreatedAt.getMonth() + 1}/${dateCreatedAt.getFullYear()}, às ${dateCreatedAt.getHours()}:${dateCreatedAt.getMinutes()}`;
 
             const timestampUpdatedAt = element.data()?.updatedAt as Timestamp;
             const dateUpdatedAt = new Date(timestampUpdatedAt?.toDate().toUTCString())
