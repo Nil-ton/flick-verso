@@ -27,7 +27,7 @@ export default function RootLayout({
       <head>
         <Script async src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_PRODUCTION === "true" && process.env.NEXT_PUBLIC_ADSENSE}`}
           crossOrigin="anonymous" />
-
+        <link rel="icon" type="image/x-icon" href="/favicon.ico"></link>
         <Script async src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_PRODUCTION === " true" && process.env.NEXT_PUBLIC_GA}`} />
 
         <script dangerouslySetInnerHTML={{
