@@ -22,16 +22,18 @@ export async function Card({ post }: props) {
                 <img
                     src={post.thumbnail}
                     alt={post.title}
+                    width={1200}
+                    height={400}
                     className='w-full lg:w-[400px] h-[250px]  object-cover aspect-video'
                     loading='lazy'
                 />
-                <Link href={post.uid}>
+                <Link href={post.uid} aria-label={`Leia ${post.title}`}>
                     <span className='w-full lg:w-[400px] h-[250px] absolute top-0 left-0 bg-gradient-to-b from-transparent to-[rgba(1,1,1,.8)] block' />
                 </Link>
             </picture>
 
             <div className="bg-white p-5 w-full rounded h-[250px]">
-                <Link href={post.uid}>
+                <Link href={post.uid} aria-label={`Leia ${post.title}`}>
                     <span className="text-lg lg:text-2xl font-bold block mb-2 cursor-pointer hover:underline">{post.title}</span>
                 </Link>
                 <PostTags tags={tags || null} />
@@ -49,6 +51,6 @@ export async function Card({ post }: props) {
                     </div>
                 )}
             </div>
-        </div>
+        </div >
     )
 }

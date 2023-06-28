@@ -11,7 +11,8 @@ export function Sidebar() {
                     <Link href={{
                         query: { page: 1 },
                         pathname: '/postagens'
-                    }} className="block text-gray-700 hover:bg-gray-300 px-2 py-1 rounded">
+                    }} 
+                    className="block text-gray-700 hover:bg-gray-300 px-2 py-1 rounded">
                         Postagens
                     </Link>
                 </li>

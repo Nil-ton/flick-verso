@@ -16,11 +16,13 @@ export async function LastNews({ posts }: props) {
               <img
                 src={item?.thumbnail}
                 alt={item?.title}
+                width={1200}
+                height={410}
                 className='w-full h-[200px] lg:h-[410px] object-cover aspect-video'
                 loading='lazy'
               />
 
-              <Link href={`${item?.uid}`}>
+              <Link href={`${item?.uid}`} aria-label={`Leia ${item.title}`}>
                 <span className='absolute top-0 left-0 bg-gradient-to-b from-transparent to-[rgba(1,1,1,1)] w-full h-full block'>
                   <div className='w-full h-full flex items-end justify-center p-5 text-white font-bold text-2xl'>
                     <span className='block hover:underline cursor-pointer'>
@@ -38,10 +40,12 @@ export async function LastNews({ posts }: props) {
             <img
               src={item?.thumbnail}
               alt={item?.title}
+              width={1200}
+              height={410}
               className='w-full h-[200px] object-cover aspect-video'
               loading='lazy'
             />
-            <Link href={`${item?.uid}`}>
+            <Link href={`${item?.uid}`} aria-label={`Leia ${item.title}`}>
               <span className='absolute top-0 left-0 bg-gradient-to-b from-transparent to-[rgba(1,1,1,1)] w-full h-full block'>
                 <div className='w-full h-full flex items-end justify-center p-5 text-white font-bold text-2xl'>
                   <span className='block hover:underline cursor-pointer'>

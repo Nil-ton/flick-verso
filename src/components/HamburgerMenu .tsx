@@ -15,7 +15,7 @@ export const HamburgerMenu = ({ menu }: props) => {
   };
   return (
     <>
-      <button className={`hamburger-button`} onClick={toggleMenu}>
+      <button className={`hamburger-button`} id="hamburger-button" aria-label="Menu" onClick={toggleMenu}>
         <span className="line"></span>
         <span className="line"></span>
         <span className="line"></span>

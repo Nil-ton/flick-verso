@@ -16,6 +16,7 @@ export default async function Home() {
 
       {posts?.length === 10 && (
         <Link
+          aria-label="Ver Mais"
           href={'/home/' + 20}
           className="cursor-pointer inline-block bg-gray-200 rounded-full text-center text-lg px-3 py-1 font-semibold text-gray-700 mr-2 mb-2"
         >

@@ -13,7 +13,7 @@ export async function Header() {
             <HamburgerMenu menu={data} />
 
             <div className="flex justify-center font-bold text-2xl uppercase">
-                <Link href={'/'}>
+                <Link href={'/'} aria-label="Pagina inicial">
                     Flick <span className="text-[red]">Verso™</span>
                 </Link>
             </div>
