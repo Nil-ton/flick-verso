@@ -76,6 +76,11 @@ export default async function Page({ params }: props) {
                                             className={`${value <= Number(note?.[0].note) ? 'text-yellow-400' : 'text-gray-400'}`}
                                         />
                                     ))}
+                                    {Number(note?.[0].note) === 1 && 'Horrível'}
+                                    {Number(note?.[0].note) === 2 && 'Ruim'}
+                                    {Number(note?.[0].note) === 3 && 'Bom'}
+                                    {Number(note?.[0].note) === 4 && 'Otimo'}
+                                    {Number(note?.[0].note) === 5 && 'Excelente'}
                                 </div>
                             </div>
                             <hr className="mt-3" />
