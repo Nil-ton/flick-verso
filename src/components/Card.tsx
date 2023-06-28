@@ -32,7 +32,7 @@ export async function Card({ post }: props) {
                 </Link>
             </picture>
 
-            <div className="bg-white p-5 w-full rounded h-[280px]">
+            <div className="bg-white p-5 w-full rounded lg:h-[250px] h-[280px]">
                 <Link href={post.uid} aria-label={`Leia ${post.title}`}>
                     <span className="text-lg lg:text-2xl font-bold block mb-2 cursor-pointer hover:underline">{post.title}</span>
                 </Link>
