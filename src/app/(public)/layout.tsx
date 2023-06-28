@@ -3,6 +3,8 @@ import { Footer } from '@/components/Footer'
 import { Metadata } from 'next'
 import '../globals.css'
 
+export const revalidate = 3600
+
 export const metadata: Metadata = {
   title: 'Flick Verso',
   description: 'Explore o universo dos filmes, séries e animes no FlickVerso. Descubra análises aprofundadas, resenhas envolventes e recomendações exclusivas, enquanto mergulha em uma jornada cinematográfica e animada sem limites. Seja bem-vindo(a) a um mundo de entretenimento que atravessa as telas e desvenda histórias cativantes.',

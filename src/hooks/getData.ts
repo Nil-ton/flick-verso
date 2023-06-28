@@ -27,7 +27,7 @@ export async function getData<T>(collectionName: string, page = 1, pageSize = 10
             const updatedAt = timestampUpdatedAt && `${dateUpdatedAt.getDate()}/${dateUpdatedAt.getMonth() + 1}/${dateUpdatedAt.getFullYear()} ${dateUpdatedAt.getHours()}:${dateUpdatedAt.getMinutes()}:${dateUpdatedAt.getSeconds()}`;
 
             const id = element.id
-
+    
             data.push({ ...element.data(), uid: id, createdAt, updatedAt })
         });
 

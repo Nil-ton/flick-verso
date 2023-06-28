@@ -115,6 +115,10 @@ export default function Postagens({ params }: props) {
                     const subcolecaoRef = doc(db, "posts", `${idCollection}/nota/${auth.currentUser?.uid}`);
                     await setDoc(subcolecaoRef, { note: data.note?.value });
                 }
+                data.sessions.forEach(async (session) => {
+                    const res = (await fetch(`/${session}`)).json()
+                    console.log(res)
+                })
             }
         } catch (error: any) {
             toast.error('Error ao atualizar, tente novamente.')

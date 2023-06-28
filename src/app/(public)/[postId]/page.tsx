@@ -27,7 +27,6 @@ export async function generateMetadata({ params }: props): Promise<Metadata> {
         }
     }
 }
-export const revalidate = 60 * 30
 
 export default async function Page({ params }: props) {
     const post = await getDocData<IPosts>('posts', params.postId)

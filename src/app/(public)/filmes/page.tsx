@@ -4,7 +4,6 @@ import { LastNews } from "@/components/LastNews";
 import { getDataWithFilter } from "@/hooks/getDataWithFilter";
 import { where } from "firebase/firestore";
 
-export const revalidate = 60 * 30
 
 export default async function Home() {
     const page = 1

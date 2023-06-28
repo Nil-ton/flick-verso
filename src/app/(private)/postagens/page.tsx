@@ -6,8 +6,6 @@ import { getData } from "@/hooks/getData"
 import { useEffect, useState } from "react"
 import { useRouter, useSearchParams } from 'next/navigation'
 
-
-
 export default function Postagens() {
     const searchParams = useSearchParams()
     const router = useRouter()
