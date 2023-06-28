@@ -32,10 +32,10 @@ export async function Card({ post }: props) {
 
             <div className="bg-white p-5 w-full rounded h-[250px]">
                 <Link href={post.uid}>
-                    <span className="text-2xl font-bold block mb-2 cursor-pointer hover:underline">{post.title}</span>
+                    <span className="text-lg lg:text-2xl font-bold block mb-2 cursor-pointer hover:underline">{post.title}</span>
                 </Link>
                 <PostTags tags={tags || null} />
-                <span className="text-lg">
+                <span className="text-md lg:text-lg">
                     {post.subtitle}
                 </span>
                 {note && (

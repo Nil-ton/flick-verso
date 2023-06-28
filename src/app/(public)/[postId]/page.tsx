@@ -39,7 +39,7 @@ export default async function Page({ params }: props) {
         notFound()
     }
     return (
-        <div className="mx-10 lg:mx-20">
+        <div className="mx-6 lg:mx-20">
             <div>
                 <h1 className="text-[34px] lg:text-[48px] font-bold">{post.title}</h1>
                 <h2 className="text-[gray] text-[18px] lg:text-[22px]">{post.subtitle}</h2>
