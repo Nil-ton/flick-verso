@@ -5,4 +5,4 @@ Disallow: /login/
 Disallow: /postagens/
 Disallow: /api/
 
-Sitemap: https://flickverso.com.br/sitemap
+Sitemap: https://flickverso.com.br/sitemap.xml
