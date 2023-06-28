@@ -46,7 +46,7 @@ export default async function Page({ params }: props) {
 
             <div className="flex text-[14px] lg:text-[16px]">
                 <div className="mt-2">
-                    Publicado por <strong><a href={post?.author?.socialMedia} target="_blank">{post?.author?.label}</a></strong> • {post.createdAt} {`• ${post.updatedAt}`}
+                    Publicado por <strong><a href={post?.author?.socialMedia} target="_blank">{post?.author?.label}</a></strong> • {post.createdAt} {post.updatedAt && `• ${post.updatedAt}`}
                 </div>
             </div>
 
