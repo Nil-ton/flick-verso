@@ -3,7 +3,16 @@ import { Card } from "@/components/Card";
 import { LastNews } from "@/components/LastNews";
 import { getDataWithFilter } from "@/hooks/getDataWithFilter";
 import { where } from "firebase/firestore";
+import { Metadata } from "next";
 
+export const metadata: Metadata = {
+    title: 'Flick Verso',
+    description: 'Fique por dentro das últimas notícias do mundo do entretenimento no FlickVerso. Aqui você encontrará informações fresquinhas sobre filmes, séries e animes, mantendo-se atualizado(a) sobre os lançamentos, eventos e novidades mais empolgantes da indústria. Prepare-se para ser o primeiro a saber e compartilhe a emoção com outros entusiastas!',
+    keywords: "notícias de entretenimento, lançamentos, eventos, filmes, séries, animes, novidades",
+    openGraph: {
+        images: '/favicon.ico',
+    },
+}
 
 export default async function Home() {
     const page = 1
