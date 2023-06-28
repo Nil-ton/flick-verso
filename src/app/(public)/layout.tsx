@@ -25,6 +25,7 @@ export default function RootLayout({
       <head>
         <script async src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_ADSENSE}`}
           crossOrigin="anonymous" />
+        <meta name="google-site-verification" content="fEPDFwbZkylUTA1aFqToMUyX23ydDkNEcAzO9axzyIc" />
       </head>
       <body>
         <Header />
