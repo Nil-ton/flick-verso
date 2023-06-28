@@ -3,6 +3,7 @@ import { Footer } from '@/components/Footer'
 import { Metadata } from 'next'
 import '../globals.css'
 import Head from 'next/head'
+import Script from 'next/script'
 
 export const revalidate = 3600
 
@@ -23,8 +24,19 @@ export default function RootLayout({
   return (
     <html lang="pt-br">
       <head>
-        <script async src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_ADSENSE}`}
+        <Script async src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_ADSENSE}`}
           crossOrigin="anonymous" />
+
+        <Script async src="https://www.googletagmanager.com/gtag/js?id=G-R9GWT4PJYE" />
+
+        <script dangerouslySetInnerHTML={{
+          __html: `window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-R9GWT4PJYE');`}}
+        />
+
         <meta name="google-site-verification" content="fEPDFwbZkylUTA1aFqToMUyX23ydDkNEcAzO9axzyIc" />
       </head>
       <body>
