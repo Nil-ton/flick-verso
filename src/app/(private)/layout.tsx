@@ -16,7 +16,6 @@ export default async function RootLayout({
     <html lang="en">
       <body className='min-h-screen'>
         <PrivateRouter>
-          {Date.now()}
           <div className='flex'>
             <Sidebar />
             <main className='w-full m-5'>
