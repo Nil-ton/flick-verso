@@ -24,8 +24,8 @@ export async function generateMetadata({ params }: props): Promise<Metadata> {
         keywords: post?.keywords.join(','),
         openGraph: {
             type: "article",
-            images: post?.thumbnail
-        }
+            images: post?.thumbnail,
+        },
     }
 }
 

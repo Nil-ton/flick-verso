@@ -14,6 +14,9 @@ export const metadata: Metadata = {
   openGraph: {
     images: '/favicon.ico',
   },
+  twitter: {
+    card: "summary_large_image"
+  }
 }
 
 export default function RootLayout({
