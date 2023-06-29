@@ -26,11 +26,6 @@ const noteOption = z.object({
     label: z.number()
 })
 
-const authorOption = z.object({
-    value: z.string(),
-    label: z.string(),
-    socialMedia: z.string()
-})
 
 const schema = z.object({
     title: z.string().max(100, 'No máximo 90 caracteres').nonempty({ message: 'O campo Título é obrigatório' }),
@@ -40,7 +35,6 @@ const schema = z.object({
     keywords: z.string().nonempty({ message: 'O campo Palavras-chave é obrigatório' }),
     sessions: z.array(selectOption),
     type: selectOption,
-    author: authorOption,
     note: noteOption.optional(),
     richText: z.string()
 }).refine((value) => {
@@ -79,11 +73,14 @@ export default function Postagens({ params }: props) {
 
     const onSubmit = async (data: FormSchema) => {
         try {
+            const author = await getDocData<any>('admins', null, auth.currentUser?.uid)
+            const value = { value: author.name, label: author.name, socialMedia: author.socialMedia }
             const dataDTO = {
                 ...data,
                 keywords: data.keywords.split(','),
                 sessions: data.sessions.map((item) => item.value),
                 type: data.type.value,
+                author: value,
                 updatedAt: Timestamp.now(),
             }
 
@@ -155,15 +152,6 @@ export default function Postagens({ params }: props) {
         })()
     }, [])
 
-    useEffect(() => {
-        (async () => {
-            const author = await getDocData<any>('admins', null, auth.currentUser?.uid)
-            delete author?.createdAt
-            delete author?.updatedAt
-            const value = { value: author.name, label: author.name, socialMedia: author.socialMedia }
-            setValue('author', value)
-        })()
-    }, [])
 
     useEffect(() => {
         (async () => {
