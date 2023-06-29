@@ -23,11 +23,6 @@ const noteOption = z.object({
     value: z.number(),
     label: z.number()
 })
-const authorOption = z.object({
-    value: z.string(),
-    label: z.string(),
-    socialMedia: z.string()
-})
 
 const schema = z.object({
     title: z.string().max(90, 'No máximo 60 caracteres').nonempty({ message: 'O campo Título é obrigatório' }),
@@ -37,7 +32,6 @@ const schema = z.object({
     keywords: z.string().nonempty({ message: 'O campo Palavras-chave é obrigatório' }),
     sessions: z.array(selectOption),
     type: selectOption,
-    author: authorOption,
     note: noteOption.optional(),
     richText: z.string()
 }).refine((value) => {
@@ -65,11 +59,15 @@ export default function Add() {
     const watchType = watch('type')
 
     const onSubmit = async (data: FormSchema) => {
+        const author = await getDocData<any>('admins', null, auth.currentUser?.uid)
+        const value = { value: author?.name, label: author?.name, socialMedia: author?.socialMedia }
+
         const dataDTO = {
             ...data,
             keywords: data.keywords.split(','),
             sessions: data.sessions.map((item) => item.value),
             type: data.type.value,
+            author: value,
             createdAt: Timestamp.now()
         }
 
@@ -120,15 +118,6 @@ export default function Add() {
         })()
     }, [])
 
-    useEffect(() => {
-        (async () => {
-            const author = await getDocData<any>('admins', null, auth.currentUser?.uid)
-            delete author?.createdAt
-            delete author?.updatedAt
-            const value = { value: author.name, label: author.name, socialMedia: author.socialMedia }
-            setValue('author', value)
-        })()
-    }, [])
 
     useEffect(() => {
         if (watchType?.value !== 'review') {
