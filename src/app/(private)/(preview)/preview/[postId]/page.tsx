@@ -1,5 +1,6 @@
 import { IPosts } from "@/app/type"
 import { Card } from "@/components/Card"
+import { Shered } from "@/components/Shared"
 import { getDataWithFilter } from "@/hooks/getDataWithFilter"
 import { getDocData } from "@/hooks/getDoc"
 import { getSubCollection } from "@/hooks/getSubCollection"
@@ -23,7 +24,11 @@ export async function generateMetadata({ params }: props): Promise<Metadata> {
         keywords: post?.keywords.join(','),
         openGraph: {
             type: "article",
-            images: post?.thumbnail
+            images: post?.thumbnail,
+        },
+        twitter: {
+            card: "summary_large_image",
+            images: post?.thumbnail,
         }
     }
 }
@@ -44,10 +49,11 @@ export default async function Page({ params }: props) {
                 <h2 className="text-[gray] text-[18px] lg:text-[22px]">{post.subtitle}</h2>
             </div>
 
-            <div className="flex text-[14px] lg:text-[16px]">
+            <div className="flex justify-between text-[14px] lg:text-[16px]">
                 <div className="mt-2">
-                    Publicado por <strong><a href={post?.author?.socialMedia} target="_blank">{post?.author?.label}</a></strong> • {post.createdAt} • {post.updatedAt}
+                    Publicado por <strong><a href={post?.author?.socialMedia} target="_blank">{post?.author?.label}</a></strong> • {post.createdAt} {post.updatedAt && `• ${post.updatedAt}`}
                 </div>
+                <Shered post={post}></Shered>
             </div>
 
             <div className="mt-5">
