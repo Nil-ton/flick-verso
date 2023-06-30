@@ -41,7 +41,7 @@ export const RichTextEditor = ({ value, onChange }: Props) => {
           },
           controls: {
             fontsize: {
-              list: ['8', '10', '12', '14', '16', '21', '18', '20', '24', '30', '36', '48', '72'],
+              list: ['8', '10', '12', '14', '16', '18', '20', '21', '24', '30', '36', '48', '72'],
             },
           },
           iframe: true,
