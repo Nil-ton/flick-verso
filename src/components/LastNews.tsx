@@ -4,9 +4,10 @@ import Link from "next/link"
 
 type props = {
   posts: IPosts[] | undefined
+  preview?: boolean
 }
 
-export async function LastNews({ posts }: props) {
+export async function LastNews({ posts, preview }: props) {
   return (
     <div className='lg:grid grid-rows-2 grid-flow-col gap-2'>
       {posts?.map((item, i) => {
@@ -22,7 +23,7 @@ export async function LastNews({ posts }: props) {
                 loading='lazy'
               />
 
-              <Link href={`${item?.uid}`} aria-label={`Leia ${item.title}`}>
+              <Link href={preview ? `/preview/${item?.uid}` : item?.uid} aria-label={`Leia ${item.title}`}>
                 <span className='absolute top-0 left-0 bg-gradient-to-b from-transparent to-[rgba(1,1,1,1)] w-full h-full block'>
                   <div className='w-full h-full flex items-end justify-center p-5 text-white font-bold text-2xl'>
                     <span className='block hover:underline cursor-pointer'>
@@ -45,7 +46,7 @@ export async function LastNews({ posts }: props) {
               className='w-full h-[200px] object-cover aspect-video'
               loading='lazy'
             />
-            <Link href={`${item?.uid}`} aria-label={`Leia ${item.title}`}>
+            <Link href={preview ? `/preview/${item?.uid}` : item?.uid} aria-label={`Leia ${item.title}`}>
               <span className='absolute top-0 left-0 bg-gradient-to-b from-transparent to-[rgba(1,1,1,1)] w-full h-full block'>
                 <div className='w-full h-full flex items-end justify-center p-5 text-white font-bold text-2xl'>
                   <span className='block hover:underline cursor-pointer'>

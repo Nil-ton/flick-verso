@@ -4,9 +4,10 @@ import React, { useState } from 'react';
 
 type props = {
   menu: any
+  preview?: boolean
 }
 
-export const HamburgerMenu = ({ menu }: props) => {
+export const HamburgerMenu = ({ menu, preview }: props) => {
   const router = useRouter()
   const [isOpen, setIsOpen] = useState(false);
 
@@ -26,7 +27,7 @@ export const HamburgerMenu = ({ menu }: props) => {
           <ul className="flex flex-col gap-5 uppercase">
             <li
               onClick={() => {
-                router.push('/')
+                router.push(preview ? '/preview' : '/')
                 toggleMenu()
               }}
               className="font-bold hover:underline cursor-pointer">
@@ -35,7 +36,7 @@ export const HamburgerMenu = ({ menu }: props) => {
             {menu?.map((item: any) => (
               <li key={item.title}
                 onClick={() => {
-                  router.push(item.slug)
+                  router.push(preview ? '/preview/' + item.slug : item.slug)
                   toggleMenu()
                 }}
                 className="font-bold hover:underline cursor-pointer">

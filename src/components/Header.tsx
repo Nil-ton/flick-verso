@@ -5,16 +5,20 @@ import { getData } from "@/hooks/getData";
 import Link from "next/link";
 import { FaInstagram, FaTwitter } from "react-icons/fa";
 
-export async function Header() {
+type props = {
+    preview?: boolean
+}
+
+export async function Header({ preview }: props) {
     const data = await getData('sessions')
 
     return (
         <header className="p-5 w-full relative z-[10] flex items-center justify-between">
 
-            <HamburgerMenu menu={data} />
+            <HamburgerMenu menu={data} preview />
 
             <div className="flex justify-center font-bold text-2xl uppercase">
-                <Link href={'/'} aria-label="Pagina inicial">
+                <Link href={preview ? '/preview' : '/'} aria-label="Pagina inicial">
                     Flick <span className="text-[red]">Verso™</span>
                 </Link>
             </div>

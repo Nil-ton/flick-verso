@@ -1,9 +1,8 @@
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { Metadata } from 'next'
-import '../../../globals.css'
-import Head from 'next/head'
-import Script from 'next/script'
+import '../../globals.css'
+import { PrivateRouter } from '@/components/PrivateRouter'
 
 export const revalidate = 3600
 
@@ -15,7 +14,7 @@ export const metadata: Metadata = {
     images: '/favicon.ico',
   },
   twitter: {
-    card: "summary_large_image",
+
     images: '/favicon.ico',
   }
 }
@@ -29,12 +28,13 @@ export default function RootLayout({
   return (
     <html lang="pt-br">
       <body>
-
-        <Header />
-        <main className='min-h-screen'>
-          {children}
-        </main>
-        <Footer />
+        <PrivateRouter>
+          <Header preview />
+          <main className='min-h-screen'>
+            {children}
+          </main>
+          <Footer />
+        </PrivateRouter>
       </body>
     </html>
   )

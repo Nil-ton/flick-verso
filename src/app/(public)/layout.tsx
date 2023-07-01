@@ -4,6 +4,7 @@ import { Metadata } from 'next'
 import '../globals.css'
 import Head from 'next/head'
 import Script from 'next/script'
+import LgpdForm from '@/components/LgpdForm'
 
 export const revalidate = 3600
 
@@ -46,7 +47,7 @@ export default function RootLayout({
         <meta name="google-site-verification" content="fEPDFwbZkylUTA1aFqToMUyX23ydDkNEcAzO9axzyIc" />
       </head>
       <body>
-
+        <LgpdForm />
         <Header />
         <main className='min-h-screen'>
           {children}

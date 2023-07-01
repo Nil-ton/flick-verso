@@ -7,11 +7,12 @@ import Link from "next/link"
 
 type props = {
     post: IPosts
+    preview?: boolean
 }
 
 
 
-export async function Card({ post }: props) {
+export async function Card({ post, preview }: props) {
     const note = await getSubCollection<{ note: string }[]>(post.title, 'nota')
     const types = post.sessions.map(async (item) => await getDocData<ISessions>('sessions', item))
     const tags = await Promise.all(types)
@@ -27,13 +28,13 @@ export async function Card({ post }: props) {
                     className='w-full lg:w-[400px] h-[250px]  object-cover aspect-video'
                     loading='lazy'
                 />
-                <Link href={post.uid} aria-label={`Leia ${post.title}`}>
+                <Link href={preview ? "/preview/" + post.uid : post.uid} aria-label={`Leia ${post.title}`}>
                     <span className='w-full lg:w-[400px] h-[250px] absolute top-0 left-0 bg-gradient-to-b from-transparent to-[rgba(1,1,1,.8)] block' />
                 </Link>
             </picture>
 
             <div className="bg-white p-5 w-full rounded lg:h-[250px] h-[280px]">
-                <Link href={post.uid} aria-label={`Leia ${post.title}`}>
+                <Link href={preview ? "/preview/" + post.uid : post.uid} aria-label={`Leia ${post.title}`}>
                     <span className="text-lg lg:text-2xl font-bold block mb-2 cursor-pointer hover:underline">{post.title}</span>
                 </Link>
                 <PostTags tags={tags || null} />

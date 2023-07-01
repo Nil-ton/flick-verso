@@ -6,6 +6,7 @@ export function Footer() {
     const menu = [
         { slug: '/quem-somos', title: 'Quem Somos' },
         { slug: '/politica-privacidade', title: 'Política de Privacidade' },
+        { slug: '/contato', title: 'Contato' },
     ]
     return (
         <footer className="h-[150px] p-5 lg:flex justify-between m-[0_auto] mt-10">

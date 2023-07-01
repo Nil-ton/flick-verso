@@ -106,7 +106,7 @@ export default async function Page({ params }: props) {
             </div>
 
             <div>
-                {slice?.map((item) => <div key={item.uid} className="mt-10"><Card post={item} /></div>)}
+                {slice?.map((item) => <div key={item.uid} className="mt-10"><Card post={item} preview /></div>)}
             </div>
         </div >
 

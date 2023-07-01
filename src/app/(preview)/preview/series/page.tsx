@@ -23,9 +23,9 @@ export default async function Home() {
 
     return (
         <div className="flex flex-col gap-10">
-            <LastNews posts={lastPosts} />
+            <LastNews posts={lastPosts} preview />
 
-            {slicePosts?.map((item) => <Card key={item.uid} post={item} />)}
+            {slicePosts?.map((item) => <Card key={item.uid} post={item} preview />)}
         </div >
     )
 }
