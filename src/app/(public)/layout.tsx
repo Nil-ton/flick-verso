@@ -30,17 +30,17 @@ export default function RootLayout({
   return (
     <html lang="pt-br">
       <head>
-        <Script async src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_PRODUCTION === "true" && `${process.env.NEXT_PUBLIC_GA}`}`}
+        <Script async src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_GA}`}
           crossOrigin="anonymous" />
         <link rel="icon" type="image/x-icon" href="/favicon.ico"></link>
-        <Script async src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_PRODUCTION === " true" && `${process.env.NEXT_PUBLIC_GA}`}`} />
+        <Script async src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA}`} />
 
         <script dangerouslySetInnerHTML={{
           __html: `window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
 
-          gtag('config', ${process.env.NEXT_PUBLIC_PRODUCTION === "true" && `${process.env.NEXT_PUBLIC_GA}`});`
+          gtag('config', ${process.env.NEXT_PUBLIC_GA});`
         }}
         />
 
