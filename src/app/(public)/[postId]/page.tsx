@@ -77,7 +77,7 @@ export default async function Page({ params }: props) {
                             <div className="flex items-end gap-2">
                                 <div className="flex items-center text-[22px] font-bold gap-2 uppercase">
                                     <div>
-                                        Nota do crítica
+                                        Nota do crítico
                                     </div>
                                     {note?.[0].note && [1, 2, 3, 4, 5].map((value) => (
                                         <FaStar
