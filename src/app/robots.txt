@@ -4,5 +4,7 @@ Allow: /ads.txt/
 Disallow: /login/
 Disallow: /postagens/
 Disallow: /api/
+Disallow: /preview/
+
 
 Sitemap: https://flickverso.com.br/sitemap.xml
