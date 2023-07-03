@@ -1,6 +1,10 @@
-import { IPosts } from "@/app/type"
+import { IPosts, ISessions } from "@/app/type"
 import { getData } from "@/hooks/getData"
 import Link from "next/link"
+import PostTags from "./PostTags"
+import { getDocData } from "@/hooks/getDoc"
+import { CardLastPost } from "./CardLastPost"
+import { CardLastPost2 } from "./CardLastPost2"
 
 type props = {
   posts: IPosts[] | undefined
@@ -8,54 +12,25 @@ type props = {
 }
 
 export async function LastNews({ posts, preview }: props) {
+  const tags = (sessions: string[]) => {
+    let tag: (ISessions | null)[] = []
+    const types = sessions.map(async (item) => {
+      const tags = await getDocData<ISessions>('sessions', item)
+      tag = tags as unknown as (ISessions | null)[]
+    })
+    return tag as (ISessions | null)[]
+  }
   return (
     <div className='lg:grid grid-rows-2 grid-flow-col gap-2'>
       {posts?.map((item, i) => {
         if (i === 0) {
           return (
-            <picture key={item.uid} className='row-span-2 relative'>
-              <img
-                src={item?.thumbnail}
-                alt={item?.title}
-                width={1200}
-                height={410}
-                className='w-full h-[200px] lg:h-[410px] object-cover aspect-video'
-                loading='lazy'
-              />
-
-              <Link href={preview ? `/preview/${item?.uid}` : item?.uid} aria-label={`Leia ${item.title}`}>
-                <span className='absolute top-0 left-0 bg-gradient-to-b from-transparent to-[rgba(1,1,1,1)] w-full h-full block'>
-                  <div className='w-full h-full flex items-end justify-center p-5 text-white font-bold text-2xl'>
-                    <span className='block hover:underline cursor-pointer'>
-                      {item?.title}
-                    </span>
-                  </div>
-                </span>
-              </Link>
-            </picture>
+            <CardLastPost key={item.uid} post={item} />
           )
         }
 
         return (
-          <picture key={item.uid} className='relative'>
-            <img
-              src={item?.thumbnail}
-              alt={item?.title}
-              width={1200}
-              height={410}
-              className='w-full h-[200px] object-cover aspect-video'
-              loading='lazy'
-            />
-            <Link href={preview ? `/preview/${item?.uid}` : item?.uid} aria-label={`Leia ${item.title}`}>
-              <span className='absolute top-0 left-0 bg-gradient-to-b from-transparent to-[rgba(1,1,1,1)] w-full h-full block'>
-                <div className='w-full h-full flex items-end justify-center p-5 text-white font-bold text-2xl'>
-                  <span className='block hover:underline cursor-pointer'>
-                    {item?.title?.length as number < 49 ? item?.title : item?.title.slice(0, 49) + '...'}
-                  </span>
-                </div>
-              </span>
-            </Link>
-          </picture>
+          <CardLastPost2 key={item.uid} post={item} />
         )
       })}
 
