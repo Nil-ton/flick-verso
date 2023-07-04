@@ -29,7 +29,7 @@ const noteOption = z.object({
 
 const schema = z.object({
     title: z.string().max(100, 'No máximo 90 caracteres').nonempty({ message: 'O campo Título é obrigatório' }),
-    subtitle: z.string().max(150, 'No máximo 100 caracteres').nonempty({ message: 'O campo Subtítulo é obrigatório' }),
+    subtitle: z.string().max(150, 'No máximo 150 caracteres').nonempty({ message: 'O campo Subtítulo é obrigatório' }),
     thumbnail: z.string().nonempty({ message: 'O campo Subtítulo é obrigatório' }),
     description: z.string().nonempty({ message: 'O campo Descrição é obrigatório' }),
     keywords: z.string().nonempty({ message: 'O campo Palavras-chave é obrigatório' }),
