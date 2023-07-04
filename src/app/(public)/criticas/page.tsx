@@ -23,8 +23,6 @@ export default async function Home() {
     const lastPosts = posts?.slice(0, 3)
     const slicePosts = posts?.slice(3)
 
-    console.log(posts?.length)
-
     return (
         <div className="flex flex-col gap-10">
             <LastNews posts={lastPosts} />

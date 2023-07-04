@@ -114,7 +114,6 @@ export default function Postagens({ params }: props) {
                 }
                 [...data.sessions, '/'].forEach(async (session) => {
                     const res = await (await fetch(`/api/revalidate?path=${session}`)).json()
-                    console.log(res)
                 })
             }
         } catch (error: any) {
