@@ -25,7 +25,14 @@ export async function LastNews({ posts, preview }: props) {
       {posts?.map((item, i) => {
         if (i === 0) {
           return (
-            <CardLastPost key={item.uid} post={item} />
+            <>
+              <div key={item.uid} className="lg:contents hidden">
+                <CardLastPost post={item} />
+              </div>
+              <div key={item.uid} className="lg:hidden contents">
+                <CardLastPost2 post={item} />
+              </div>
+            </>
           )
         }
 

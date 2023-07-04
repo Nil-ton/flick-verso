@@ -23,16 +23,18 @@ export default async function Home() {
     const lastPosts = posts?.slice(0, 3)
     const slicePosts = posts?.slice(3)
 
+    console.log(posts?.length)
+
     return (
         <div className="flex flex-col gap-10">
             <LastNews posts={lastPosts} />
 
             {slicePosts?.map((item) => <Card key={item.uid} post={item} />)}
 
-            {posts?.length === 10 && (
+            {posts && posts?.length > 9 && (
                 <Link
                     aria-label="Ver Mais"
-                    href={'/animes/' + 2}
+                    href={'/criticas/' + 2}
                     className="cursor-pointer inline-block bg-gray-200 rounded-full text-center text-lg px-3 py-1 font-semibold text-gray-700 mr-2 mb-2"
                 >
                     Ver Mais
