@@ -24,23 +24,26 @@ export function Search() {
                 <div className="text-[40px] text-white w-full flex justify-end cursor-pointer p-10" onClick={handleOpen}>
                     <MdOutlineClose />
                 </div>
-                <div className="relative m-[10%]" itemScope itemType="https://schema.org/SearchAction">
-                    <input
-                        type="text"
-                        name="q"
-                        autoComplete="off"
-                        className="pl-4 pr-10 py-2 w-full rounded-lg border border-gray-300 focus:border-blue-500 focus:ring-blue-500"
-                        placeholder="Palavra-chave"
-                        required
-                        onChange={handleSearchTerm}
-                    />
-                    <button
-                        type="button"
-                        className="absolute top-0 right-0 h-full w-12 bg-blue-500 text-white rounded-r-lg flex items-center justify-center"
-                        onClick={handleRedirect}
-                    >
-                        <FaSearch />
-                    </button>
+                <div itemScope itemType="https://schema.org/WebSite">
+                    <div className="relative m-[10%]" itemScope itemType="https://schema.org/SearchAction">
+                        <meta itemProp="target" content="/search?q={q}" />
+                        <input
+                            type="text"
+                            name="q"
+                            autoComplete="off"
+                            className="pl-4 pr-10 py-2 w-full rounded-lg border border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                            placeholder="Palavra-chave"
+                            required
+                            onChange={handleSearchTerm}
+                        />
+                        <button
+                            type="button"
+                            className="absolute top-0 right-0 h-full w-12 bg-blue-500 text-white rounded-r-lg flex items-center justify-center"
+                            onClick={handleRedirect}
+                        >
+                            <FaSearch />
+                        </button>
+                    </div>
                 </div>
             </div>
             <div dir="rtl">
