@@ -26,7 +26,6 @@ export function Search() {
                 </div>
                 <div itemScope itemType="https://schema.org/WebSite">
                     <div className="relative m-[10%]" itemScope itemType="https://schema.org/SearchAction">
-                        <meta itemProp="target" content="/search?q={q}" />
                         <input
                             type="text"
                             name="q"
