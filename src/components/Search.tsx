@@ -24,8 +24,9 @@ export function Search() {
                 <div className="text-[40px] text-white w-full flex justify-end cursor-pointer p-10" onClick={handleOpen}>
                     <MdOutlineClose />
                 </div>
-                <div itemScope itemType="https://schema.org/WebSite">
-                    <div className="relative m-[10%]" itemScope itemType="https://schema.org/SearchAction">
+                <div className="relative m-[10%]" itemScope itemType="https://schema.org/WebSite">
+                    <div>
+                        <meta itemProp="target" content="/search?q={q}" />
                         <input
                             type="text"
                             name="q"
@@ -36,7 +37,7 @@ export function Search() {
                             onChange={handleSearchTerm}
                         />
                         <button
-                            type="button"
+                            type="submit"
                             className="absolute top-0 right-0 h-full w-12 bg-blue-500 text-white rounded-r-lg flex items-center justify-center"
                             onClick={handleRedirect}
                         >
