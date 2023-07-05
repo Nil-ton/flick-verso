@@ -89,7 +89,6 @@ export default function Add() {
         }
         [...data.sessions, '/'].forEach(async (session) => {
             const res = await (await fetch(`/api/revalidate?path=${session}`)).json()
-            console.log(res)
         })
         router.push('/postagens?page=' + 1)
     };

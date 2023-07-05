@@ -18,7 +18,6 @@ type props = {
 
 export default async function Home({ params }: props) {
     const searchTerm = decodeURIComponent(params.search).toLowerCase().trim();
-    console.log(params)
 
     const page = Number(params.page)
     const pageSize = 10

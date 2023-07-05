@@ -27,7 +27,7 @@ export async function CardLastPost2({ post, preview }: props) {
                         <div className="flex flex-col">
                             <PostTags tags={tags || null} />
                             <span className='block hover:underline cursor-pointer'>
-                                {post?.title?.length as number < 49 ? post?.title : post?.title.slice(0, 49) + '...'}
+                                {post?.title?.length as number < 60 ? post?.title : post?.title.slice(0, 60) + '...'}
                             </span>
                         </div>
                     </div>
