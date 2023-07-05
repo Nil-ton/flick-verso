@@ -27,10 +27,10 @@ export async function LastNews({ posts, preview }: props) {
           return (
             <>
               <div key={item.uid} className="lg:contents hidden">
-                <CardLastPost post={item} />
+                <CardLastPost post={item} preview={preview} />
               </div>
               <div key={item.uid} className="lg:hidden contents">
-                <CardLastPost2 post={item} />
+                <CardLastPost2 post={item} preview={preview} />
               </div>
             </>
           )
