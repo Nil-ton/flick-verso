@@ -16,7 +16,7 @@ export const HamburgerMenu = ({ menu, preview }: props) => {
   };
   return (
     <>
-      <button className={`hamburger-button`} id="hamburger-button" aria-label="Menu" onClick={toggleMenu}>
+      <button className={`lg:hidden hamburger-button`} id="hamburger-button" aria-label="Menu" onClick={toggleMenu}>
         <span className="line"></span>
         <span className="line"></span>
         <span className="line"></span>

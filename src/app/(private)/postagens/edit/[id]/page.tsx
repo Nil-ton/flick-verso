@@ -28,7 +28,7 @@ const noteOption = z.object({
 
 
 const schema = z.object({
-    title: z.string().max(100, 'No máximo 90 caracteres').nonempty({ message: 'O campo Título é obrigatório' }),
+    title: z.string().max(100, 'No máximo 100 caracteres').nonempty({ message: 'O campo Título é obrigatório' }),
     subtitle: z.string().max(150, 'No máximo 150 caracteres').nonempty({ message: 'O campo Subtítulo é obrigatório' }),
     thumbnail: z.string().nonempty({ message: 'O campo Subtítulo é obrigatório' }),
     description: z.string().nonempty({ message: 'O campo Descrição é obrigatório' }),
@@ -77,7 +77,7 @@ export default function Postagens({ params }: props) {
             const value = { value: author.name, label: author.name, socialMedia: author.socialMedia }
             const dataDTO = {
                 ...data,
-                keywords: data.keywords.split(','),
+                keywords: data.keywords.split(',').map(item => item.trim()),
                 sessions: data.sessions.map((item) => item.value),
                 type: data.type.value,
                 author: value,
