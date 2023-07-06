@@ -43,72 +43,72 @@ export default async function Page({ params }: props) {
         notFound()
     }
     return (
-        <div className="mx-6 lg:mx-20">
-            <div>
-                <h1 className="text-[34px] lg:text-[48px] font-bold">{post.title}</h1>
-                <h2 className="text-[gray] text-[18px] lg:text-[22px]">{post.subtitle}</h2>
-            </div>
-
-            <div className="flex justify-between text-[14px] lg:text-[16px]">
-                <div className="mt-2">
-                    Publicado por <strong><a href={post?.author?.socialMedia} target="_blank">{post?.author?.label}</a></strong> • {post.createdAt} {post.updatedAt && `• ${post.updatedAt}`}
+        <div>
+            <div className="mx-6 lg:mx-20">
+                <div>
+                    <h1 className="text-[34px] lg:text-[48px] font-bold">{post.title}</h1>
+                    <h2 className="text-[gray] text-[18px] lg:text-[22px]">{post.subtitle}</h2>
                 </div>
-                <Shered post={post}></Shered>
-            </div>
 
-            <div className="mt-5">
-                <picture className="relative">
-                    <span className='w-full lg:h-[500px] h-[250px] absolute top-0 left-0 bg-gradient-to-b from-transparent to-[rgba(1,1,1,.8)] block' />
-                    <img className="object-cover aspect-video w-full lg:h-[500px] h-[250px]" src={post.thumbnail} alt={post.title} />
-                </picture>
-            </div>
+                <div className="flex justify-between text-[14px] lg:text-[16px]">
+                    <div className="mt-2">
+                        Publicado por <strong><a href={post?.author?.socialMedia} target="_blank">{post?.author?.label}</a></strong> • {post.createdAt} {post.updatedAt && `• ${post.updatedAt}`}
+                    </div>
+                    <Shered post={post}></Shered>
+                </div>
 
-            <div className="max-w-[700px]">
-                <div className="mt-10 lg:w-full" dangerouslySetInnerHTML={{ __html: post.richText }} />
-                <script async src="https://platform.twitter.com/widgets.js"></script>
-                <script async src="//www.instagram.com/embed.js"></script>
-            </div>
+                <div className="mt-5">
+                    <picture className="relative">
+                        <span className='w-full lg:h-[500px] h-[250px] absolute top-0 left-0 bg-gradient-to-b from-transparent to-[rgba(1,1,1,.8)] block' />
+                        <img className="object-cover aspect-video w-full lg:h-[500px] h-[250px]" src={post.thumbnail} alt={post.title} />
+                    </picture>
+                </div>
 
-            <div className="mt-10">
-                {
-                    note.length !== 0 && (
-                        <div>
-                            <hr className="mb-3" />
-                            <div className="flex items-end gap-2">
-                                <div className="flex items-center text-[22px] font-bold gap-2 uppercase">
-                                    <div>
-                                        Nota do crítico
+                <div className="max-w-[700px]">
+                    <div className="mt-10 lg:w-full" dangerouslySetInnerHTML={{ __html: post.richText }} />
+                    <script async src="https://platform.twitter.com/widgets.js"></script>
+                    <script async src="//www.instagram.com/embed.js"></script>
+                </div>
+
+                <div className="mt-10">
+                    {
+                        note.length !== 0 && (
+                            <div>
+                                <hr className="mb-3" />
+                                <div className="flex items-end gap-2">
+                                    <div className="flex items-center text-[22px] font-bold gap-2 uppercase">
+                                        <div>
+                                            Nota do crítico
+                                        </div>
+                                        {note?.[0].note && [1, 2, 3, 4, 5].map((value) => (
+                                            <FaStar
+                                                key={value}
+                                                className={`${value <= Number(note?.[0].note) ? 'text-yellow-400' : 'text-gray-400'}`}
+                                            />
+                                        ))}
                                     </div>
-                                    {note?.[0].note && [1, 2, 3, 4, 5].map((value) => (
-                                        <FaStar
-                                            key={value}
-                                            className={`${value <= Number(note?.[0].note) ? 'text-yellow-400' : 'text-gray-400'}`}
-                                        />
-                                    ))}
+                                    <div className="text-[16px]">
+                                        {Number(note?.[0].note) === 1 && 'Ruim'}
+                                        {Number(note?.[0].note) === 2 && 'Regular'}
+                                        {Number(note?.[0].note) === 3 && 'Bom'}
+                                        {Number(note?.[0].note) === 4 && 'Ótimo'}
+                                        {Number(note?.[0].note) === 5 && 'Excelente'}
+                                    </div>
                                 </div>
-                                <div className="text-[16px]">
-                                    {Number(note?.[0].note) === 1 && 'Ruim'}
-                                    {Number(note?.[0].note) === 2 && 'Regular'}
-                                    {Number(note?.[0].note) === 3 && 'Bom'}
-                                    {Number(note?.[0].note) === 4 && 'Ótimo'}
-                                    {Number(note?.[0].note) === 5 && 'Excelente'}
-                                </div>
+                                <hr className="mt-3" />
                             </div>
-                            <hr className="mt-3" />
-                        </div>
-                    )
-                }
-            </div>
+                        )
+                    }
+                </div>
 
-            <div className="flex items-center flex-col gap-5">
-                <hr className="mt-10 bg-[red] w-[400px] h-[15px]" />
-                <span className="uppercase text-[24px]">FlickVerso Recomenda</span>
+                <div className="flex items-center flex-col gap-5">
+                    <hr className="mt-10 bg-[red] w-[400px] h-[15px]" />
+                    <span className="uppercase text-[24px]">FlickVerso Recomenda</span>
+                </div>
             </div>
-
-            <div>
+            <div className="w-screen">
                 {slice?.map((item) => <div key={item.uid} className="mt-10"><Card post={item} /></div>)}
             </div>
-        </div >
-
+        </div>
     )
 }
