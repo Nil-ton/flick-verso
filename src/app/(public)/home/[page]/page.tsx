@@ -17,10 +17,6 @@ export default async function Home({ params }: props) {
     const lastPostSlice = posts?.slice(0, 3)
     const slice = posts?.slice(3)
 
-    console.log(posts)
-
-
-
     if (!Number(params.page)) {
         return notFound()
     }

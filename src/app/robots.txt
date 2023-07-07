@@ -5,6 +5,7 @@ Disallow: /postagens/
 Disallow: /api/
 Disallow: /preview/
 Disallow: /home/
+Disallow: /search/
 
 
 Sitemap: https://flickverso.com.br/sitemap.xml
