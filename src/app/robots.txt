@@ -3,8 +3,6 @@ Disallow: /login/
 Disallow: /postagens/
 Disallow: /api/
 Disallow: /preview/
-Disallow: /home/
-Disallow: /search/
 
 
 
