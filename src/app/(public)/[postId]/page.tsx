@@ -1,5 +1,6 @@
 import { IPosts } from "@/app/type"
 import { Card } from "@/components/Card"
+import { NoteReview } from "@/components/NoteReview"
 import { Shered } from "@/components/Shared"
 import { getDataWithFilter } from "@/hooks/getDataWithFilter"
 import { getDocData } from "@/hooks/getDoc"
@@ -87,13 +88,7 @@ export default async function Page({ params }: props) {
                                             />
                                         ))}
                                     </div>
-                                    <div className="text-[16px]">
-                                        {Number(note?.[0].note) === 1 && 'Ruim'}
-                                        {Number(note?.[0].note) === 2 && 'Regular'}
-                                        {Number(note?.[0].note) === 3 && 'Bom'}
-                                        {Number(note?.[0].note) === 4 && 'Ótimo'}
-                                        {Number(note?.[0].note) === 5 && 'Excelente'}
-                                    </div>
+                                    <NoteReview note={note} />
                                 </div>
                                 <hr className="mt-3" />
                             </div>
