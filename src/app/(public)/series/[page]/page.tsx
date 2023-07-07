@@ -16,7 +16,7 @@ type props = {
 export default async function Home({ params }: props) {
     const page = params.page
     const pageSize = 11
-    const posts = await getDataWithFilter<IPosts[]>('posts', { page, pageSize, where: where('sessions', "array-contains", "noticias") })
+    const posts = await getDataWithFilter<IPosts[]>('posts', { page, pageSize, where: where('sessions', "array-contains", "series") })
 
     return (
         <div className="flex flex-col gap-10">

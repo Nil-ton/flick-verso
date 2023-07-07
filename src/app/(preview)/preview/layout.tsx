@@ -1,4 +1,4 @@
-import { Header } from '@/components/Header'
+import { Header } from '@/components/Header/Header'
 import { Footer } from '@/components/Footer'
 import { Metadata } from 'next'
 import '../../globals.css'

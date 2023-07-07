@@ -46,6 +46,7 @@ export function Search() {
                     </div>
                 </div>
             </div>
+            
             <div dir="rtl">
                 <div className="border-s-2 border-gray-300 cursor-pointer">
                     <div className="pr-2" onClick={handleOpen}>

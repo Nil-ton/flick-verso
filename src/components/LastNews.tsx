@@ -26,10 +26,10 @@ export async function LastNews({ posts, preview }: props) {
         if (i === 0) {
           return (
             <>
-              <div key={item.uid} className="lg:contents hidden">
+              <div key={item.uid + `${i}1`} className="lg:contents hidden">
                 <CardLastPost post={item} preview={preview} />
               </div>
-              <div key={item.uid} className="lg:hidden contents">
+              <div key={item.uid + `${i}2`} className="lg:hidden contents">
                 <CardLastPost2 post={item} preview={preview} />
               </div>
             </>
@@ -37,7 +37,7 @@ export async function LastNews({ posts, preview }: props) {
         }
 
         return (
-          <CardLastPost2 key={item.uid} post={item} />
+          <CardLastPost2 key={item.uid + `${i}3`} post={item} />
         )
       })}
 

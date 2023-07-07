@@ -13,7 +13,7 @@ type props = {
 
 export default async function Home({ params }: props) {
     const page = params.page
-    const pageSize = 11
+    const pageSize = 10
     const posts = await getDataWithFilter<IPosts[]>('posts', { page, pageSize, where: where('sessions', "array-contains", "filmes") })
 
     return (
@@ -29,7 +29,7 @@ export default async function Home({ params }: props) {
                     Ver Mais
                 </Link>
             )}
-            {posts && posts?.length < 10 && (
+            {posts && posts?.length < 9 && (
                 <Link
                     href={Number(params.page) - 1 === 1 ? '/' : '/filmes/' + (Number(params.page) - 1)}
                     className="cursor-pointer inline-block bg-gray-200 rounded-full text-center text-lg px-3 py-1 font-semibold text-gray-700 mr-2 mb-2"
