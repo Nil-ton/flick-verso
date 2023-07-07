@@ -1,10 +1,10 @@
 User-agent: *
 
-Allow: /ads.txt/
 Disallow: /login/
 Disallow: /postagens/
 Disallow: /api/
 Disallow: /preview/
+Disallow: /home/
 
 
 Sitemap: https://flickverso.com.br/sitemap.xml
