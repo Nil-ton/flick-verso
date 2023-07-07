@@ -65,8 +65,8 @@ export default async function Page({ params }: props) {
                     </picture>
                 </div>
 
-                <div className="max-w-[700px]">
-                    <div className="mt-10 lg:w-full" dangerouslySetInnerHTML={{ __html: post.richText }} />
+                <div className="mt-5">
+                    <div className="prose-2xl prose prose-cyan prose-img:rounded-sm" dangerouslySetInnerHTML={{ __html: post.richText }} />
                     <script async src="https://platform.twitter.com/widgets.js"></script>
                     <script async src="//www.instagram.com/embed.js"></script>
                 </div>

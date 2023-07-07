@@ -29,7 +29,7 @@ export default function RootLayout({
 
   return (
     <html lang="pt-br">
-      <head>
+      {/* <head>
         <Script async src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_GA}`}
           crossOrigin="anonymous" />
         <link rel="icon" type="image/x-icon" href="/favicon.ico"></link>
@@ -45,7 +45,7 @@ export default function RootLayout({
         />
 
         <meta name="google-site-verification" content="fEPDFwbZkylUTA1aFqToMUyX23ydDkNEcAzO9axzyIc" />
-      </head>
+      </head> */}
       <body>
         <LgpdForm />
         <Header />

@@ -12,7 +12,7 @@ type props = {
 }
 export function Shered({ post }: props) {
     return (
-        <div className="text-[21px] flex gap-3">
+        <div className="text-[21px] flex gap-3 prose">
             <TwitterShareButton url={`https://flickverso.com.br/${post.uid}`} title={post.title}>
                 <FaTwitter />
             </TwitterShareButton>
