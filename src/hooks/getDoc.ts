@@ -1,13 +1,12 @@
 import { db } from "@/service/firebase";
 import { replaceSpacesWithHyphens } from "@/utils/replaceSpacesWithHyphens";
-import { formatDistanceToNow } from "date-fns";
+import { format, formatDistanceToNow } from "date-fns";
 import { Timestamp, collection, doc, getDoc } from "firebase/firestore";
 import { ptBR } from "date-fns/locale";
 
 function getTimeSinceUpdate(updatedAt: string) {
-    const updatedTime = new Date(updatedAt);
 
-    return formatDistanceToNow(updatedTime, { addSuffix: true, locale: ptBR });
+    return formatDistanceToNow(updatedAt as unknown as number, { addSuffix: true, locale: ptBR });
 }
 
 export async function getDocData<T>(collection: string, id?: string | null, authId?: string) {
@@ -22,7 +21,7 @@ export async function getDocData<T>(collection: string, id?: string | null, auth
         const timestampUpdateAt = data?.updatedAt as Timestamp;
         const dateCreatedAt = new Date(timestampCreatedAt?.toDate().toUTCString())
         const dateUpdateAt = new Date(timestampUpdateAt?.toDate().toUTCString())
-        const createdAt = `${dateCreatedAt.getDate()}/${dateCreatedAt.getMonth() + 1}/${dateCreatedAt.getFullYear()}, às ${dateCreatedAt.getHours()}:${dateCreatedAt.getMinutes()}`;
+        const createdAt = `${format(dateCreatedAt, 'dd/MM/yyyy', { locale: ptBR })}, às ${format(dateCreatedAt, 'HH:mm', { locale: ptBR })}`;
         const updatedAt = timestampUpdateAt && `Atualizado ${getTimeSinceUpdate(dateUpdateAt as unknown as string)}`;;
         return { ...documentSnapshot.data(), createdAt, updatedAt, uid: idCollection } as T;
     } else {
