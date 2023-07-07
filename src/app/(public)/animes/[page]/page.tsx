@@ -5,6 +5,7 @@ import { getData } from "@/hooks/getData";
 import { getDataWithFilter } from "@/hooks/getDataWithFilter";
 import { where } from "firebase/firestore";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
 type props = {
     params: {
@@ -14,9 +15,16 @@ type props = {
 
 
 export default async function Home({ params }: props) {
-    const page = params.page
+    const page = Number(params.page)
     const pageSize = 10
     const posts = await getDataWithFilter<IPosts[]>('posts', { page, pageSize, where: where('sessions', "array-contains", "animes") })
+
+    if (!page || page === 1) {
+        return redirect('/animes')
+    }
+    if (!posts) {
+        return redirect('/animes')
+    }
 
     return (
         <div className="flex flex-col gap-10">

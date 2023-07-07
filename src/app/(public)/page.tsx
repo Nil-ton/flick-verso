@@ -3,6 +3,7 @@ import { LastNews } from "@/components/LastNews";
 import { getData } from "@/hooks/getData";
 import { IPosts } from "../type";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 
 export default async function Home() {
   const posts = await getData<IPosts[]>('posts')

@@ -8,7 +8,7 @@ import { replaceSpacesWithHyphens } from "@/utils/replaceSpacesWithHyphens";
 import { doc, getDoc, setDoc, where } from "firebase/firestore";
 import { Metadata } from "next";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { redirect } from "next/navigation";
 
 type props = {
     params: {
@@ -24,8 +24,11 @@ export default async function Home({ params }: props) {
     const pageSize = 10
     const posts = await getDataWithFilter<IPosts[]>('posts', { page, pageSize, where: where('keywords', 'array-contains', searchTerm) })
 
-    if (page) {
-        notFound()
+    if (!page) {
+        return redirect('/')
+    }
+    if (!posts) {
+        return redirect('/')
     }
 
     return (

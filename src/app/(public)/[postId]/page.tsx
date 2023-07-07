@@ -40,9 +40,11 @@ export default async function Page({ params }: props) {
     const session = post?.sessions.find((item) => item === 'animes' || item === 'filmes' || item === 'series' || "noticias")
     const recommeted = await getDataWithFilter<IPosts[]>('posts', { page: 1, pageSize: 4, where: where('sessions', "array-contains", session) })
     const slice = recommeted?.filter((item) => item.uid !== params.postId)
+
     if (!post) {
         notFound()
     }
+
     return (
         <div>
             <div className="mx-6 lg:mx-20">
