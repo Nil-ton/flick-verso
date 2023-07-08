@@ -103,7 +103,7 @@ export default async function Page({ params }: props) {
                     <span className="uppercase text-[24px]">FlickVerso Recomenda</span>
                 </div>
             </div>
-            <div className="w-screen">
+            <div className="w-full">
                 {slice?.map((item) => <div key={item.uid} className="mt-10"><Card post={item} /></div>)}
             </div>
         </div>

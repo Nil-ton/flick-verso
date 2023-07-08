@@ -22,7 +22,7 @@ export async function CardLastPost({ post, preview }: props) {
                 loading='lazy'
             />
 
-            <Link href={preview ? `/preview/${post?.uid}` : post?.uid} aria-label={`Leia ${post.title}`}>
+            <Link href={preview ? `/preview/${post?.uid}` : `/${post?.uid}`} aria-label={`Leia ${post.title}`}>
                 <span className='absolute top-0 left-0 bg-gradient-to-b from-transparent to-[rgba(1,1,1,1)] w-full h-full block'>
                     <div className='w-full h-full flex items-end justify-center p-5 text-white font-bold text-2xl'>
                         <div className="flex flex-col">

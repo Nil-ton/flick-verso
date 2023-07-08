@@ -22,6 +22,7 @@ export default async function Home({ params }: props) {
     if (!page || page === 1) {
         return redirect('/animes')
     }
+    
     if (!posts) {
         return redirect('/animes')
     }
