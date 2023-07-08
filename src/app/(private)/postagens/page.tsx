@@ -9,7 +9,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 export default function Postagens() {
     const searchParams = useSearchParams()
     const router = useRouter()
-    const page = searchParams.get('page')
+    const page = searchParams.get('page') || 1
 
     const [posts, setPosts] = useState<IPosts[] | undefined>([])
 

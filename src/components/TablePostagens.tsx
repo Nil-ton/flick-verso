@@ -6,6 +6,7 @@ import { collection, query, where, getDocs, Timestamp } from 'firebase/firestore
 import { db } from '@/service/firebase';
 import { useRouter, useSearchParams } from "next/navigation";
 import { replaceSpacesWithHyphens } from "@/utils/replaceSpacesWithHyphens";
+import { getDataWithFilter } from "@/hooks/getDataWithFilter";
 
 type props = {
     posts: IPosts[] | undefined
@@ -21,12 +22,14 @@ export function TablePostagens({ posts }: props) {
     const [inputSearch, setInputSearch] = useState('')
 
     const handleSearch = async () => {
-        router.push(`/postagens?page=${page}&search=${inputSearch}`)
+        router.push(`/postagens?page=1&search=${inputSearch}`)
     };
 
     const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setInputSearch(e.target.value)
     };
+
+    console.log(searchResults)
 
 
     useEffect(() => {
@@ -34,23 +37,13 @@ export function TablePostagens({ posts }: props) {
             setSearchResults(posts);
         } else {
             (async () => {
-                // Executa a consulta no Firestore com base no termo de pesquisa
-                const q = query(collection(db, 'posts'), where('title', '==', search));
-                const querySnapshot = await getDocs(q);
-
-                // Mapeia os resultados da consulta para um array
-                const results: any = []
-
-                querySnapshot.docs.forEach((doc) => {
-                    const timestamp = doc.data().createdAt as Timestamp;
-                    const date = new Date(timestamp.toDate().toUTCString())
-                    const createdAt = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;;
-                    const id = doc.id
-                    results.push({ ...doc.data(), uid: id, createdAt })
-                });
-
-                // Define os resultados da pesquisa no estado
-                setSearchResults(results);
+                const postsFilter = await getDataWithFilter<IPosts[] | undefined>('posts', {
+                    page: page || 1,
+                    pageSize: 10,
+                    where: where('title', '==', search)
+                })
+                console.log(postsFilter)
+                setSearchResults(postsFilter);
             })()
         }
     }, [posts, search])
