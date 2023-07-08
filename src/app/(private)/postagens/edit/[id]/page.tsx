@@ -97,7 +97,7 @@ export default function Postagens({ params }: props) {
                     const subcolecaoRef = doc(db, "posts", `${idCollection}/nota/${auth.currentUser?.uid}`);
                     await setDoc(subcolecaoRef, { note: data.note?.value });
                 }
-                router.push('/postagens?page=' + 1)
+                router.push('/postagens')
             } else {
                 if (docSnapshot.exists()) {
                     toast.error('Já existe uma postagem com esse nome.')
@@ -115,6 +115,7 @@ export default function Postagens({ params }: props) {
                 [...data.sessions, '/'].forEach(async (session) => {
                     const res = await (await fetch(`/api/revalidate?path=${session}`)).json()
                 })
+                router.push('/postagens')
             }
         } catch (error: any) {
             toast.error('Error ao atualizar, tente novamente.')
