@@ -37,9 +37,12 @@ export async function generateMetadata({ params }: props): Promise<Metadata> {
 export default async function Page({ params }: props) {
     const post = await getDocData<IPosts>('posts', params.postId)
     const note = await getSubCollection<{ note: string }[]>(String(post?.title), 'nota')
-    const session = post?.sessions.find((item) => item === 'animes' || item === 'filmes' || item === 'series' || "noticias")
+    const validSessions = ['animes', 'filmes', 'series', 'noticias'];
+    const session = post?.sessions.find((item) => validSessions.includes(item));
     const recommeted = await getDataWithFilter<IPosts[]>('posts', { page: 1, pageSize: 4, where: where('sessions', "array-contains", session) })
     const slice = recommeted?.filter((item) => item.uid !== params.postId)
+
+    console.log(session)
 
     if (!post) {
         notFound()
