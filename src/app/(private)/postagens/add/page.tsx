@@ -88,10 +88,10 @@ export default function Add() {
                 const subcolecaoRef = doc(db, "posts", `${idCollection}/nota/${auth.currentUser?.uid}`);
                 await setDoc(subcolecaoRef, { note: data.note?.value });
             }
-            [...data.sessions, '/'].forEach(async (session) => {
+            [...data.sessions, '/', '/postagens'].forEach(async (session) => {
                 const res = await (await fetch(`/api/revalidate?path=${session}`)).json()
             })
-            router.push('/postagens?page=' + 1)
+            router.push('/postagens/' + 1)
         } catch (error: any) {
             toast.error(error.message as string)
         }
