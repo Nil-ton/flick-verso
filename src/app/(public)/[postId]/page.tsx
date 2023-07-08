@@ -42,8 +42,6 @@ export default async function Page({ params }: props) {
     const recommeted = await getDataWithFilter<IPosts[]>('posts', { page: 1, pageSize: 4, where: where('sessions', "array-contains", session) })
     const slice = recommeted?.filter((item) => item.uid !== params.postId)
 
-    console.log(session)
-
     if (!post) {
         notFound()
     }
@@ -56,7 +54,7 @@ export default async function Page({ params }: props) {
                     <h2 className="text-[gray] text-[18px] lg:text-[22px]">{post.subtitle}</h2>
                 </div>
 
-                <div className="flex justify-between text-[14px] lg:text-[16px]">
+                <div className="flex lg:flex-row flex-col lg:gap-0 gap-3 justify-between text-[14px] lg:text-[16px]">
                     <div className="mt-2">
                         Publicado por <strong><a href={post?.author?.socialMedia} target="_blank">{post?.author?.label}</a></strong> • {post.createdAt} {post.updatedAt && `• ${post.updatedAt}`}
                     </div>
@@ -102,7 +100,7 @@ export default async function Page({ params }: props) {
                 </div>
 
                 <div className="flex items-center flex-col gap-5">
-                    <hr className="mt-10 bg-[red] w-[400px] h-[15px]" />
+                    <hr className="mt-10 bg-[red] lg:w-[400px] w-[50%] h-[15px]" />
                     <span className="uppercase text-[24px]">FlickVerso Recomenda</span>
                 </div>
             </div>
