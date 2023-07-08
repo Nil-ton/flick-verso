@@ -59,38 +59,43 @@ export default function Add() {
     const watchType = watch('type')
 
     const onSubmit = async (data: FormSchema) => {
-        const author = await getDocData<any>('admins', null, auth.currentUser?.uid)
-        const value = { value: author?.name, label: author?.name, socialMedia: author?.socialMedia }
+        try {
+            const author = await getDocData<any>('admins', null, auth.currentUser?.uid)
+            const value = { value: author?.name, label: author?.name, socialMedia: author?.socialMedia }
 
-        const dataDTO = {
-            ...data,
-            keywords: data.keywords.split(',').map(item => item.toLowerCase().trim()),
-            sessions: data.sessions.map((item) => item.value),
-            type: data.type.value,
-            author: value,
-            createdAt: Timestamp.now()
+            const dataDTO = {
+                ...data,
+                keywords: data.keywords.split(',').map(item => item.toLowerCase().trim()),
+                sessions: data.sessions.map((item) => item.value),
+                type: data.type.value,
+                author: value,
+                createdAt: Timestamp.now()
+            }
+
+            delete dataDTO.note
+            const idCollection = replaceSpacesWithHyphens(data.title)
+            const docRef = doc(db, 'posts', idCollection as string);
+            const docSnapshot = await getDoc(docRef);
+
+            if (docSnapshot.exists()) {
+                toast.error('Já existe uma postagem com esse nome.')
+                return;
+            }
+
+            await setDoc(docRef, dataDTO);
+
+            if (data.note) {
+                const subcolecaoRef = doc(db, "posts", `${idCollection}/nota/${auth.currentUser?.uid}`);
+                await setDoc(subcolecaoRef, { note: data.note?.value });
+            }
+            [...data.sessions, '/'].forEach(async (session) => {
+                const res = await (await fetch(`/api/revalidate?path=${session}`)).json()
+            })
+            router.push('/postagens?page=' + 1)
+        } catch (error: any) {
+            toast.error(error.message as string)
         }
 
-        delete dataDTO.note
-        const idCollection = replaceSpacesWithHyphens(data.title)
-        const docRef = doc(db, 'posts', idCollection as string);
-        const docSnapshot = await getDoc(docRef);
-
-        if (docSnapshot.exists()) {
-            toast.error('Já existe uma postagem com esse nome.')
-            return;
-        }
-
-        await setDoc(docRef, dataDTO);
-
-        if (data.note) {
-            const subcolecaoRef = doc(db, "posts", `${idCollection}/nota/${auth.currentUser?.uid}`);
-            await setDoc(subcolecaoRef, { note: data.note?.value });
-        }
-        [...data.sessions, '/'].forEach(async (session) => {
-            const res = await (await fetch(`/api/revalidate?path=${session}`)).json()
-        })
-        router.push('/postagens?page=' + 1)
     };
 
     useEffect(() => {

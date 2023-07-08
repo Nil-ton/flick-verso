@@ -2,50 +2,42 @@
 import Link from "next/link";
 import { IPosts } from "@/app/type"
 import React, { useState, useEffect } from 'react';
-import { collection, query, where, getDocs, Timestamp } from 'firebase/firestore';
-import { db } from '@/service/firebase';
-import { useRouter, useSearchParams } from "next/navigation";
-import { replaceSpacesWithHyphens } from "@/utils/replaceSpacesWithHyphens";
-import { getDataWithFilter } from "@/hooks/getDataWithFilter";
+import { redirect, useRouter } from "next/navigation";
+import Pagination from "./Pagination";
 
 type props = {
     posts: IPosts[] | undefined
+    search?: string
+    currentPage: number
 }
 
-export function TablePostagens({ posts }: props) {
-    const searchParams = useSearchParams()
-    const router = useRouter()
-    const search = searchParams.get('search')
-    const page = searchParams.get('page')
-
+export function TablePostagens({ posts, search, currentPage }: props) {
     const [searchResults, setSearchResults] = useState(posts);
-    const [inputSearch, setInputSearch] = useState('')
+    const [inputSearch, setInputSearch] = useState(search)
+    const router = useRouter()
 
     const handleSearch = async () => {
-        router.push(`/postagens?page=1&search=${inputSearch}`)
+        if (inputSearch === "") {
+            return router.push(`/postagens`)
+        }
+        return router.push(`/postagens/1/${inputSearch}`)
     };
 
     const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setInputSearch(e.target.value)
+        return setInputSearch(e.target.value)
     };
 
-    console.log(searchResults)
+    const handlePageChange = (page: number) => {
+        if (search) {
+            return router.push(`/postagens/${page}/${search}`)
+        }
+        router.push(`/postagens/${page}`)
+    };
 
 
     useEffect(() => {
-        if (!search || search === '') {
-            setSearchResults(posts);
-        } else {
-            (async () => {
-                const postsFilter = await getDataWithFilter<IPosts[] | undefined>('posts', {
-                    page: page || 1,
-                    pageSize: 10,
-                    where: where('title', '==', search)
-                })
-                console.log(postsFilter)
-                setSearchResults(postsFilter);
-            })()
-        }
+        setSearchResults(posts)
+        setInputSearch(search || "")
     }, [posts, search])
 
 
@@ -56,6 +48,7 @@ export function TablePostagens({ posts }: props) {
                     type="text"
                     placeholder="Digite o termo de pesquisa"
                     onChange={handleSearchChange}
+                    value={inputSearch}
                     className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                 />
                 <button onClick={handleSearch} className="text-blue-500 font-bold ml-5">Pesquisar</button>
@@ -92,6 +85,9 @@ export function TablePostagens({ posts }: props) {
                     ))}
                 </tbody>
             </table>
+            <div className="mt-5">
+                <Pagination currentPage={currentPage || 0} onPageChange={handlePageChange} dataLenght={posts?.length} />
+            </div>
         </>
     )
 }

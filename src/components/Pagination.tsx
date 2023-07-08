@@ -1,3 +1,4 @@
+'use client'
 interface PaginationProps {
     currentPage: number;
     dataLenght?: number;
