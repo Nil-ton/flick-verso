@@ -15,6 +15,8 @@ export interface IPosts {
         value: string,
         socialMedia: string
     }
+    dateCreatedAt?: string
+    dateUpdateAt?: string
 }
 
 export type ISessions = {

@@ -5,6 +5,7 @@ import { Shered } from "@/components/Shared"
 import { getDataWithFilter } from "@/hooks/getDataWithFilter"
 import { getDocData } from "@/hooks/getDoc"
 import { getSubCollection } from "@/hooks/getSubCollection"
+import { data } from "autoprefixer"
 import { where } from "firebase/firestore"
 import { Metadata } from "next"
 import { notFound } from "next/navigation"
@@ -39,6 +40,7 @@ export default async function Page({ params }: props) {
     const note = await getSubCollection<{ note: string }[]>(String(post?.title), 'nota')
     const validSessions = ['animes', 'filmes', 'series', 'noticias'];
     const session = post?.sessions.find((item) => validSessions.includes(item));
+    const isNoticia = post?.sessions.find(item => item === 'noticias')
     const recommeted = await getDataWithFilter<IPosts[]>('posts', { page: 1, pageSize: 4, where: where('sessions', "array-contains", session) })
     const slice = recommeted?.filter((item) => item.uid !== params.postId)
 
@@ -107,6 +109,32 @@ export default async function Page({ params }: props) {
             <div className="w-full">
                 {slice?.map((item) => <div key={item.uid} className="mt-10"><Card post={item} /></div>)}
             </div>
+            <script type="application/ld+json">
+                {JSON.stringify({
+                    "@context": "https://schema.org",
+                    "@type": isNoticia ? "NewsArticle" : "BlogPosting",
+                    "headline": post.title,
+                    "image": post.thumbnail,
+                    "datePublished": post.dateCreatedAt,
+                    "dateModified": post.dateUpdateAt,
+                    "author": {
+                        "@type": "Person",
+                        "name": post.author
+                    },
+                    "publisher": {
+                        "@type": "Organization",
+                        "name": "Flick Verso",
+                        "logo": {
+                            "@type": "ImageObject",
+                            "url": "https://flickverso.com.br/favicon.ico"
+                        }
+                    },
+                    "mainEntityOfPage": {
+                        "@type": "WebPage",
+                        "@id": `https://flickverso.com.br/${post.uid}`
+                    }
+                })}
+            </script>
         </div>
     )
 }

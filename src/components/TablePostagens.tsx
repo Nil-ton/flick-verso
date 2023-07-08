@@ -69,13 +69,13 @@ export function TablePostagens({ posts, search, currentPage }: props) {
                             <td className="border px-4 py-2">{item?.updatedAt || item.createdAt}</td>
                             <td className="border px-4 py-2 flex gap-3">
                                 <Link
-                                    href={'postagens/edit/' + item.uid}
+                                    href={'/postagens/edit/' + item.uid}
                                     className="text-blue-500"
                                 >
                                     Editar
                                 </Link>
                                 <Link
-                                    href={`/preview/${item.uid}`}
+                                    href={`/${item.uid}`}
                                     className="text-blue-500"
                                 >
                                     Visualizar

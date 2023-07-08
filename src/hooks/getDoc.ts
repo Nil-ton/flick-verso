@@ -23,7 +23,7 @@ export async function getDocData<T>(collection: string, id?: string | null, auth
         const dateUpdateAt = new Date(timestampUpdateAt?.toDate().toUTCString())
         const createdAt = `${format(dateCreatedAt, 'dd/MM/yyyy', { locale: ptBR })}, às ${format(dateCreatedAt, 'HH:mm', { locale: ptBR })}`;
         const updatedAt = timestampUpdateAt && `Atualizado ${getTimeSinceUpdate(dateUpdateAt as unknown as string)}`;;
-        return { ...documentSnapshot.data(), createdAt, updatedAt, uid: idCollection } as T;
+        return { ...documentSnapshot.data(), createdAt, updatedAt, uid: idCollection, dateCreatedAt, dateUpdateAt } as T;
     } else {
         return null
     }
