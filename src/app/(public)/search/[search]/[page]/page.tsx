@@ -8,7 +8,7 @@ import { replaceSpacesWithHyphens } from "@/utils/replaceSpacesWithHyphens";
 import { doc, getDoc, setDoc, where } from "firebase/firestore";
 import { Metadata } from "next";
 import Link from "next/link";
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
 type props = {
     params: {
@@ -28,7 +28,7 @@ export default async function Home({ params }: props) {
         return redirect('/')
     }
     if (!posts) {
-        return redirect('/')
+        return notFound()
     }
 
     return (
