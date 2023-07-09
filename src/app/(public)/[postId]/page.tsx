@@ -62,7 +62,7 @@ export default async function Page({ params }: props) {
                 "dateModified": post.dateUpdateAt,
                 "author": {
                     "@type": "Person",
-                    "name": post.author
+                    "name": post.author.value
                 },
                 "publisher": {
                     "@type": "Organization",
@@ -98,7 +98,7 @@ export default async function Page({ params }: props) {
             "dateModified": post.dateUpdateAt,
             "author": {
                 "@type": "Person",
-                "name": post.author
+                "name": post.author.value
             },
             "publisher": {
                 "@type": "Organization",
