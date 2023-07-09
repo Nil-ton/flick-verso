@@ -30,7 +30,10 @@ export async function generateMetadata({ params }: props): Promise<Metadata> {
         },
         twitter: {
             card: "summary_large_image",
-            images: post?.thumbnail,
+            images: {
+                url: post?.thumbnail as string,
+                alt: post?.title
+            },
         }
     }
 }
@@ -109,8 +112,8 @@ export default async function Page({ params }: props) {
             <div className="w-full">
                 {slice?.map((item) => <div key={item.uid} className="mt-10"><Card post={item} /></div>)}
             </div>
-            <script type="application/ld+json">
-                {JSON.stringify({
+            <script type="application/ld+json" dangerouslySetInnerHTML={{
+                __html: JSON.stringify({
                     "@context": "https://schema.org",
                     "@type": isNoticia ? "NewsArticle" : "BlogPosting",
                     "headline": post.title,
@@ -133,7 +136,9 @@ export default async function Page({ params }: props) {
                         "@type": "WebPage",
                         "@id": `https://flickverso.com.br/${post.uid}`
                     }
-                })}
+                })
+            }}>
+
             </script>
         </div>
     )
