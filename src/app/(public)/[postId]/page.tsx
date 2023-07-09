@@ -77,7 +77,7 @@ export default async function Page({ params }: props) {
                     "@id": `https://flickverso.com.br/${post.uid}`
                 },
                 "itemReviewed": {
-                    "@type": session === 'filmes' ? 'Movie' : session === 'series' ? "TVSeries" : 'Animes',
+                    "@type": session === 'filmes' ? 'Movie' : "TVSeries",
                     "name": post.title,
                 },
                 "reviewRating": {
