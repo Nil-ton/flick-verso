@@ -115,7 +115,7 @@ export default async function Page({ params }: props) {
             <script type="application/ld+json" dangerouslySetInnerHTML={{
                 __html: JSON.stringify({
                     "@context": "https://schema.org",
-                    "@type": isNoticia ? "NewsArticle" : "BlogPosting",
+                    "@type": isNoticia ? "NewsArticle" : post.type === 'review' ? "Review" : "BlogPosting",
                     "headline": post.title,
                     "image": post.thumbnail,
                     "datePublished": post.dateCreatedAt,
