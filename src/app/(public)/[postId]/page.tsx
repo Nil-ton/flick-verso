@@ -85,7 +85,7 @@ export default async function Page({ params }: props) {
                     "ratingValue": note?.[0].note,
                     "bestRating": "5"
                 },
-
+                "reviewBody": post.richText
             }
         }
 
