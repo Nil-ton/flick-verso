@@ -55,7 +55,7 @@ export default async function Page({ params }: props) {
         if (type === 'review') {
             return {
                 "@context": "https://schema.org",
-                "@type": isNoticia ? "NewsArticle" : post.type === 'review' ? "Review" : "BlogPosting",
+                "@type": 'Review',
                 "headline": post.title,
                 "image": post.thumbnail,
                 "datePublished": post.dateCreatedAt,
