@@ -51,6 +51,71 @@ export default async function Page({ params }: props) {
         notFound()
     }
 
+    const lg = (type: string) => {
+        if (type === 'review') {
+            return {
+                "@context": "https://schema.org",
+                "@type": isNoticia ? "NewsArticle" : post.type === 'review' ? "Review" : "BlogPosting",
+                "headline": post.title,
+                "image": post.thumbnail,
+                "datePublished": post.dateCreatedAt,
+                "dateModified": post.dateUpdateAt,
+                "author": {
+                    "@type": "Person",
+                    "name": post.author
+                },
+                "publisher": {
+                    "@type": "Organization",
+                    "name": "Flick Verso",
+                    "logo": {
+                        "@type": "ImageObject",
+                        "url": "https://flickverso.com.br/favicon.ico"
+                    }
+                },
+                "mainEntityOfPage": {
+                    "@type": "WebPage",
+                    "@id": `https://flickverso.com.br/${post.uid}`
+                },
+                "itemReviewed": {
+                    "@type": session === 'filmes' ? 'Movie' : session === 'series' ? "TVSeries" : 'Animes',
+                    "name": post.title,
+                },
+                "reviewRating": {
+                    "@type": "Rating",
+                    "ratingValue": note?.[0].note,
+                    "bestRating": "5"
+                },
+
+            }
+        }
+
+        return {
+            "@context": "https://schema.org",
+            "@type": isNoticia ? "NewsArticle" : "BlogPosting",
+            "headline": post.title,
+            "image": post.thumbnail,
+            "datePublished": post.dateCreatedAt,
+            "dateModified": post.dateUpdateAt,
+            "author": {
+                "@type": "Person",
+                "name": post.author
+            },
+            "publisher": {
+                "@type": "Organization",
+                "name": "Flick Verso",
+                "logo": {
+                    "@type": "ImageObject",
+                    "url": "https://flickverso.com.br/favicon.ico"
+                }
+            },
+            "mainEntityOfPage": {
+                "@type": "WebPage",
+                "@id": `https://flickverso.com.br/${post.uid}`
+            },
+        }
+    }
+
+
     return (
         <div>
             <div className="mx-6 lg:mx-20">
@@ -113,30 +178,7 @@ export default async function Page({ params }: props) {
                 {slice?.map((item) => <div key={item.uid} className="mt-10"><Card post={item} /></div>)}
             </div>
             <script type="application/ld+json" dangerouslySetInnerHTML={{
-                __html: JSON.stringify({
-                    "@context": "https://schema.org",
-                    "@type": isNoticia ? "NewsArticle" : post.type === 'review' ? "Review" : "BlogPosting",
-                    "headline": post.title,
-                    "image": post.thumbnail,
-                    "datePublished": post.dateCreatedAt,
-                    "dateModified": post.dateUpdateAt,
-                    "author": {
-                        "@type": "Person",
-                        "name": post.author
-                    },
-                    "publisher": {
-                        "@type": "Organization",
-                        "name": "Flick Verso",
-                        "logo": {
-                            "@type": "ImageObject",
-                            "url": "https://flickverso.com.br/favicon.ico"
-                        }
-                    },
-                    "mainEntityOfPage": {
-                        "@type": "WebPage",
-                        "@id": `https://flickverso.com.br/${post.uid}`
-                    }
-                })
+                __html: JSON.stringify(lg(post.type))
             }}>
 
             </script>
