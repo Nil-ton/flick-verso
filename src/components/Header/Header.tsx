@@ -37,8 +37,8 @@ export async function Header({ preview }: props) {
 
             <div className="flex gap-3 text-[21px]">
                 <Search />
-                <a href="https://www.instagram.com/flickversooficial/" className="font-medium hover:text-zinc-600" target="_blank"><FaInstagram /></a>
-                <a href="https://twitter.com/flickverso" className="font-medium hover:text-zinc-600" target="_blank"><FaTwitter /></a>
+                <a href="https://www.instagram.com/flickversooficial/" aria-label="Instagram" className="font-medium hover:text-zinc-600" target="_blank"><FaInstagram /></a>
+                <a href="https://twitter.com/flickverso" aria-label="Twitter" className="font-medium hover:text-zinc-600" target="_blank"><FaTwitter /></a>
             </div>
         </HeaderRoot>
     )
