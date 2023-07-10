@@ -38,7 +38,7 @@ export async function Card({ post, preview }: props) {
                     <span className="text-lg lg:text-2xl font-bold block mb-2 cursor-pointer hover:underline">{post.title}</span>
                 </Link>
                 <PostTags tags={tags || null} />
-                <span className="text-[gray] block text-md">{post.createdAt}</span>
+                <span className="text-zinc-500 block text-md">{post.createdAt}</span>
                 <span className="text-md lg:text-lg">
                     {post.subtitle}
                 </span>
