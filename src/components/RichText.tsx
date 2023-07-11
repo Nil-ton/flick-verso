@@ -54,7 +54,6 @@ export const RichTextEditor = ({ value, onChange }: Props) => {
           tabIndex: 1000,
           editHTMLDocumentMode: false,
           zIndex: 1000,
-
         }}
         onBlur={handleEditorChange}
         onChange={() => { }}

@@ -119,7 +119,7 @@ export default async function Page({ params }: props) {
             <div className="mx-6 lg:mx-20">
                 <div>
                     <h1 className="text-[34px] lg:text-[48px] font-bold">{post.title}</h1>
-                    <h2 className="text-zinc-500 text-[18px] lg:text-[22px]">{post.subtitle}</h2>
+                    <h2 className="text-zinc-700 text-[18px] lg:text-[22px]">{post.subtitle}</h2>
                 </div>
 
                 <div className="flex lg:flex-row flex-col lg:gap-0 gap-3 justify-between text-[14px] lg:text-[16px]">
