@@ -1,5 +1,4 @@
 import dynamic from 'next/dynamic';
-import Script from 'next/script';
 
 const JoditEditor = dynamic(
   () => import('jodit-react'),
@@ -19,15 +18,6 @@ export const RichTextEditor = ({ value, onChange }: Props) => {
   };
 
 
-  const handleTweetButtonClick = (editor: any) => {
-    const tweetHTML = prompt('Insira o código HTML do tweet:');
-    if (tweetHTML) {
-      if (typeof window !== "undefined") {
-        const test = tweetHTML.split('<script')
-        editor.s.insertHTML(`<div style="display: block; margin-left: auto; margin-right: auto;">${test[0]}</div>`);
-      }
-    }
-  };
 
   return (
     <>
@@ -45,12 +35,6 @@ export const RichTextEditor = ({ value, onChange }: Props) => {
             },
           },
           iframe: true,
-          extraButtons: [
-            {
-              text: 'tweet',
-              exec: handleTweetButtonClick,
-            },
-          ],
           tabIndex: 1000,
           editHTMLDocumentMode: false,
           zIndex: 1000,

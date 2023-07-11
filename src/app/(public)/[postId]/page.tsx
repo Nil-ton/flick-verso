@@ -175,10 +175,9 @@ export default async function Page({ params }: props) {
                 {slice?.map((item) => <div key={item.uid} className="mt-10"><Card post={item} /></div>)}
             </div>
 
-            <script type="application/ld+json" dangerouslySetInnerHTML={{
-                __html: JSON.stringify(lg(post.type))
-            }}>
-            </script>
+            <Script id="application/ld+json" type="application/ld+json">
+                {JSON.stringify(lg(post.type))}
+            </Script>
         </div>
     )
 }
