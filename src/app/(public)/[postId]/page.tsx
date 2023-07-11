@@ -47,6 +47,7 @@ export default async function Page({ params }: props) {
     const recommeted = await getDataWithFilter<IPosts[]>('posts', { page: 1, pageSize: 4, where: where('sessions', "array-contains", session) })
     const slice = recommeted?.filter((item) => item.uid !== params.postId)
 
+
     if (!post) {
         notFound()
     }
@@ -175,9 +176,8 @@ export default async function Page({ params }: props) {
                 {slice?.map((item) => <div key={item.uid} className="mt-10"><Card post={item} /></div>)}
             </div>
 
-            <Script id="application/ld+json" type="application/ld+json">
-                {JSON.stringify(lg(post.type))}
-            </Script>
+            <script id="application/ld+json" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(lg(post.type)) }}>
+            </script>
         </div>
     )
 }
