@@ -19,25 +19,21 @@ const LgpdForm = () => {
     }, [accepted])
 
     return (
-        <>
-            {accepted && null}
-            {!accepted && <div className="flex gap-[20px] items-center bg-gray-800 text-white py-2 px-4 fixed bottom-0 left-0 w-full fixed  z-[1000]">
-                <p className="text-center">
-                    Nós utilizamos cookies para melhorar sua experiência de usuário.
-                    Para conferir detalhadamente todos os cookies utilizados, leia nosso
-                    <a href="/politica-de-privacidade" className="underline ml-1">
-                        Política de Privacidade
-                    </a>
-                </p>
-                <button
-                    onClick={handleAccept}
-                    className="bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 px-4 mt-2 rounded"
-                >
-                    Aceitar
-                </button>
-            </div>}
-
-        </>
+        <div data-accepted={accepted} className="data-[accepted=true]:hidden flex gap-[20px] items-center bg-gray-800 text-white py-2 px-4 fixed bottom-0 left-0 w-full  z-[1000]">
+            <p className="text-center">
+                Nós utilizamos cookies para melhorar sua experiência de usuário.
+                Para conferir detalhadamente todos os cookies utilizados, leia nosso
+                <a href="/politica-de-privacidade" className="underline ml-1">
+                    Política de Privacidade
+                </a>
+            </p>
+            <button
+                onClick={handleAccept}
+                className="bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 px-4 mt-2 rounded"
+            >
+                Aceitar
+            </button>
+        </div>
     );
 };
 
