@@ -26,26 +26,23 @@ export default function RootLayout({
   return (
     <html lang="pt-br">
       <head>
-        <meta name="google-site-verification" content="fEPDFwbZkylUTA1aFqToMUyX23ydDkNEcAzO9axzyIc" />
-        <Script async src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_GA}`}
+        <script async src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_GA}`}
           crossOrigin="anonymous" />
-        <Script async src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA}`} />
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA}`} />
 
-        <Script
-          strategy="afterInteractive"
-          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA}`}
-        />
-
-        <Script id="ga-config" strategy="afterInteractive">
-          {`
-          window.dataLayer = window.dataLayer || [];
+        <script dangerouslySetInnerHTML={{
+          __html: `window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
-          gtag('config', '${process.env.NEXT_PUBLIC_GA}');
-        `}
-        </Script>
+
+          gtag('config', '${process.env.NEXT_PUBLIC_GA}');`
+        }}
+        />
+
         <Script async src="https://platform.twitter.com/widgets.js"></Script>
         <Script async src="//www.instagram.com/embed.js"></Script>
+
+        <meta name="google-site-verification" content="fEPDFwbZkylUTA1aFqToMUyX23ydDkNEcAzO9axzyIc" />
       </head>
       <body>
         <LgpdForm />
