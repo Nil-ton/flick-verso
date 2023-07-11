@@ -39,8 +39,8 @@ export default function RootLayout({
         }}
         />
 
-        <Script async src="https://platform.twitter.com/widgets.js"></Script>
-        <Script async src="//www.instagram.com/embed.js"></Script>
+        <script async src="https://platform.twitter.com/widgets.js"></script>
+        <script async src="//www.instagram.com/embed.js"></script>
 
         <meta name="google-site-verification" content="fEPDFwbZkylUTA1aFqToMUyX23ydDkNEcAzO9axzyIc" />
       </head>
