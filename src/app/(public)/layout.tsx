@@ -30,14 +30,19 @@ export default function RootLayout({
           crossOrigin="anonymous" />
         <Script async src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA}`} />
 
-        <script dangerouslySetInnerHTML={{
-          __html: `window.dataLayer = window.dataLayer || [];
+        <Script
+          strategy="afterInteractive"
+          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA}`}
+        />
+
+        <Script id="ga-config" strategy="afterInteractive">
+          {`
+          window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
-
-          gtag('config', '${process.env.NEXT_PUBLIC_GA}');`
-        }}
-        />
+          gtag('config', '${process.env.NEXT_PUBLIC_GA}');
+        `}
+        </Script>
 
         <meta name="google-site-verification" content="fEPDFwbZkylUTA1aFqToMUyX23ydDkNEcAzO9axzyIc" />
       </head>

@@ -8,6 +8,7 @@ import { getSubCollection } from "@/hooks/getSubCollection"
 import { where } from "firebase/firestore"
 import { Metadata } from "next"
 import { notFound } from "next/navigation"
+import Script from "next/script"
 import { FaStar } from "react-icons/fa"
 
 type props = {
@@ -138,8 +139,8 @@ export default async function Page({ params }: props) {
 
                 <div className="mt-5">
                     <div className="prose-2xl prose prose-cyan prose-img:rounded-sm" dangerouslySetInnerHTML={{ __html: post.richText }} />
-                    <script async src="https://platform.twitter.com/widgets.js"></script>
-                    <script async src="//www.instagram.com/embed.js"></script>
+                    <Script async src="https://platform.twitter.com/widgets.js"></Script>
+                    <Script async src="//www.instagram.com/embed.js"></Script>
                 </div>
 
                 <div className="mt-10">
@@ -175,11 +176,13 @@ export default async function Page({ params }: props) {
             <div className="w-full">
                 {slice?.map((item) => <div key={item.uid} className="mt-10"><Card post={item} /></div>)}
             </div>
-            <script type="application/ld+json" dangerouslySetInnerHTML={{
+            <Script id="lg" strategy="afterInteractive">
+                {`${lg(post.type)}`}
+            </Script>
+            {/* <script type="application/ld+json" dangerouslySetInnerHTML={{
                 __html: JSON.stringify(lg(post.type))
             }}>
-
-            </script>
+            </script> */}
         </div>
     )
 }
