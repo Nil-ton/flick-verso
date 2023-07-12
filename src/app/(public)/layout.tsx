@@ -42,6 +42,10 @@ export default function RootLayout({
         <Script async src="https://platform.twitter.com/widgets.js"></Script>
         <Script async src="//www.instagram.com/embed.js"></Script>
         <link rel="canonical" href="https://flickverso.com.br" />
+        <meta
+          httpEquiv="Content-Security-Policy"
+          content="default-src 'self'; img-src https://*; child-src 'none';"
+        />
         <meta name="google-site-verification" content="fEPDFwbZkylUTA1aFqToMUyX23ydDkNEcAzO9axzyIc" />
       </head>
       <body>
