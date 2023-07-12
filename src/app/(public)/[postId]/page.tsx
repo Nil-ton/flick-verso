@@ -51,7 +51,7 @@ export default async function Page({ params }: props) {
     const validSessions = ['animes', 'filmes', 'series', 'noticias'];
     const session = post?.sessions.find((item) => validSessions.includes(item));
     const isNoticia = post?.sessions.find(item => item === 'noticias')
-    const recommeted = await getDataWithFilter<IPosts[]>('posts', { page: 1, pageSize: 4, where: where('sessions', "array-contains", session) })
+    const recommeted = await getDataWithFilter<IPosts[]>('posts', { page: 1, pageSize: 11, where: where('sessions', "array-contains", session) })
     const slice = recommeted?.filter((item) => item.uid !== params.postId)
 
 
