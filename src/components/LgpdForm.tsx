@@ -23,7 +23,7 @@ const LgpdForm = () => {
             <p className="text-center">
                 Nós utilizamos cookies para melhorar sua experiência de usuário.
                 Para conferir detalhadamente todos os cookies utilizados, leia nosso
-                <a href="/politica-de-privacidade" className="underline ml-1">
+                <a href="/politica-privacidade" className="underline ml-1">
                     Política de Privacidade
                 </a>
             </p>

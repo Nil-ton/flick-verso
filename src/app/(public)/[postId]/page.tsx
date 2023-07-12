@@ -105,7 +105,8 @@ export default async function Page({ params }: props) {
             "dateModified": post.dateUpdateAt,
             "author": {
                 "@type": "Person",
-                "name": post.author.value
+                "name": post.author.value,
+                "url": "https://www.linkedin.com/in/nilton-oliveira-link/"
             },
             "publisher": {
                 "@type": "Organization",
