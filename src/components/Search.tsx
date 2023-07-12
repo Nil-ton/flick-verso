@@ -58,10 +58,13 @@ export function Search() {
                 __html: JSON.stringify({
                     "@context": "https://schema.org",
                     "@type": "WebSite",
+                    "url": "https://flickverso.com.br/",
                     "potentialAction": {
                         "@type": "SearchAction",
-                        "target": "/search/{q}",
-                        "query-input": "required name=q"
+                        "target": {
+                            "@type": "EntryPoint",
+                            "urlTemplate": "https://flickverso.com.br/search/{q}"
+                        },
                     }
                 })
             }}>
