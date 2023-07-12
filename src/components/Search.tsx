@@ -24,9 +24,9 @@ export function Search() {
                 <div className="text-[40px] text-white w-full flex justify-end cursor-pointer p-10" onClick={handleOpen}>
                     <MdOutlineClose />
                 </div>
-                <div className="relative m-[10%]" itemScope itemType="https://schema.org/WebSite">
+                <div className="relative m-[10%]">
                     <div>
-                        <meta itemProp="target" content="/search?q={q}" />
+                        <meta />
                         <input
                             type="text"
                             name="q"
@@ -46,7 +46,7 @@ export function Search() {
                     </div>
                 </div>
             </div>
-            
+
             <div dir="rtl">
                 <div className="border-s-2 border-gray-300 cursor-pointer">
                     <div className="pr-2" onClick={handleOpen}>
@@ -54,6 +54,18 @@ export function Search() {
                     </div>
                 </div>
             </div>
+            <script type="application/ld+json" dangerouslySetInnerHTML={{
+                __html: JSON.stringify({
+                    "@context": "https://schema.org",
+                    "@type": "WebSite",
+                    "potentialAction": {
+                        "@type": "SearchAction",
+                        "target": "/search/{q}",
+                        "query-input": "required name=q"
+                    }
+                })
+            }}>
+            </script>
         </>
     )
 }
