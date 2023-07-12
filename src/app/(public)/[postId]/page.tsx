@@ -31,7 +31,7 @@ export async function generateMetadata({ params }: props): Promise<Metadata> {
             type: "article",
             images: post?.thumbnail,
             title: post?.title,
-            url: `https//flickverso.com.br/${post?.uid}`,
+            url: `/${post?.uid}`,
             description: post?.description,
             locale: 'pt-br'
         },
