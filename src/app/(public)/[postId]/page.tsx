@@ -27,6 +27,10 @@ export async function generateMetadata({ params }: props): Promise<Metadata> {
         openGraph: {
             type: "article",
             images: post?.thumbnail,
+            title: post?.title,
+            url: `https//flickverso.com.br/${post?.uid}`,
+            description: post?.description,
+            locale: 'pt-br'
         },
         twitter: {
             card: "summary_large_image",
@@ -34,6 +38,9 @@ export async function generateMetadata({ params }: props): Promise<Metadata> {
                 url: post?.thumbnail as string,
                 alt: post?.title
             },
+            title: post?.title,
+            description: post?.description,
+            site: '@flickverso'
         }
     }
 }
@@ -134,38 +141,16 @@ export default async function Page({ params }: props) {
                 <div className="mt-5">
                     <picture className="relative">
                         <span className='w-full lg:h-[500px] h-[250px] absolute top-0 left-0 bg-gradient-to-b from-transparent to-[rgba(1,1,1,.8)] block' />
-                        <img className="object-cover aspect-video w-full lg:h-[500px] h-[250px]" src={post.thumbnail} alt={post.title} />
+                        <img loading="lazy" width={1200} height={680} className="object-cover aspect-video w-full lg:h-[500px] h-[250px]" src={post.thumbnail} alt={post.title + ' thumbnail'} />
                     </picture>
                 </div>
 
                 <div className="mt-5">
-                    <div className="prose-2xl prose prose-cyan prose-img:rounded-sm" dangerouslySetInnerHTML={{ __html: post.richText }} />
+                    <div className="prose-2xl prose prose-cyan prose-img:rounded-sm" dangerouslySetInnerHTML={{ __html: post.richText.replace('<img', '<img loading="lazy"') }} />
                 </div>
 
-                <div className="mt-10">
-                    {
-                        note.length !== 0 && (
-                            <div>
-                                <hr className="mb-3" />
-                                <div className="flex items-end gap-2">
-                                    <div className="flex items-center text-[22px] font-bold gap-2 uppercase">
-                                        <div>
-                                            Nota do crítico
-                                        </div>
-                                        {note?.[0].note && [1, 2, 3, 4, 5].map((value) => (
-                                            <FaStar
-                                                key={value}
-                                                className={`${value <= Number(note?.[0].note) ? 'text-yellow-400' : 'text-gray-400'}`}
-                                            />
-                                        ))}
-                                    </div>
-                                    <NoteReview note={note} />
-                                </div>
-                                <hr className="mt-3" />
-                            </div>
-                        )
-                    }
-                </div>
+                {note[0] && <NoteReview note={note} />}
+
 
                 <div className="flex items-center flex-col gap-5">
                     <hr className="mt-10 bg-[red] lg:w-[400px] w-[50%] h-[15px]" />
