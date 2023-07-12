@@ -29,9 +29,9 @@ export async function generateMetadata({ params }: props): Promise<Metadata> {
         },
         openGraph: {
             type: "article",
-            images: post?.thumbnail,
+            images: [{ url: post?.thumbnail as string }],
             title: post?.title,
-            url: `/${post?.uid}`,
+            url: `https://flickverso.com.br/${post?.uid}`,
             description: post?.description,
             locale: 'pt-br'
         },
