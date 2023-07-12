@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: props): Promise<Metadata> {
         description: post?.description,
         keywords: post?.keywords.join(','),
         alternates: {
-            canonical: "https://flickverso.com.br",
+            canonical: `https://flickverso.com.br/${post?.uid}`,
         },
         openGraph: {
             type: "article",
