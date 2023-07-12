@@ -65,6 +65,7 @@ export function Search() {
                             "@type": "EntryPoint",
                             "urlTemplate": "https://flickverso.com.br/search/{q}"
                         },
+                        "query-input": "required name=q"
                     }
                 })
             }}>
