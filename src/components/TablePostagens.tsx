@@ -4,6 +4,8 @@ import { IPosts } from "@/app/type"
 import React, { useState, useEffect } from 'react';
 import { redirect, useRouter } from "next/navigation";
 import Pagination from "./Pagination";
+import { TwitterShareButton } from "react-share";
+import { FaTwitter } from "react-icons/fa";
 
 type props = {
     posts: IPosts[] | undefined
@@ -80,6 +82,9 @@ export function TablePostagens({ posts, search, currentPage }: props) {
                                 >
                                     Visualizar
                                 </Link>
+                                <TwitterShareButton url={`https://flickverso.com.br/${item.uid}`} title={item.title}>
+                                    <FaTwitter />
+                                </TwitterShareButton>
                             </td>
                         </tr>
                     ))}
