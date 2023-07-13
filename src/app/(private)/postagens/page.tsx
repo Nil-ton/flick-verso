@@ -7,7 +7,7 @@ import { redirect, useRouter, useSearchParams } from 'next/navigation'
 
 
 export default async function Postagens() {
-    const posts = await getData<IPosts[]>('posts')
+    const posts = await getData<IPosts[]>('posts', 1)
 
     return <>
         <TablePostagens posts={posts} currentPage={1} />
