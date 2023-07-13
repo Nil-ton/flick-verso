@@ -29,6 +29,8 @@ export default function RootLayout({
         <script async src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_GA}`}
           crossOrigin="anonymous" />
         <script async src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA}`} />
+        <meta property="og:image:width" content="1200"></meta>
+        <meta property="og:image:height" content="630"></meta>
 
         <script id='gtag' dangerouslySetInnerHTML={{
           __html: `window.dataLayer = window.dataLayer || [];
