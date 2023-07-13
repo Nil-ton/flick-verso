@@ -67,12 +67,14 @@ export default function Postagens({ params }: props) {
     const path = pathname.split('/')[3]
     const dataDoc = getDocData<IPosts>('posts', params.id)
     const subCollection = getSubCollection<{ note: string }[]>(params.id, 'nota')
+    const [isSubmit, setIsSubmit] = useState(false)
 
     const needNote = watch('type')?.value === 'review'
     const watchType = watch('type')
 
     const onSubmit = async (data: FormSchema) => {
         try {
+            setIsSubmit(true)
             const author = await getDocData<any>('admins', null, auth.currentUser?.uid)
             const value = { value: author.name, label: author.name, socialMedia: author.socialMedia }
             const dataDTO = {
@@ -112,13 +114,15 @@ export default function Postagens({ params }: props) {
                     const subcolecaoRef = doc(db, "posts", `${idCollection}/nota/${auth.currentUser?.uid}`);
                     await setDoc(subcolecaoRef, { note: data.note?.value });
                 }
-                [...data.sessions, '/', '/postagens'].forEach(async (session) => {
+                [...data.sessions.map((item) => item.value), '/', '/postagens'].forEach(async (session) => {
                     const res = await (await fetch(`/api/revalidate?path=${session}`)).json()
                 })
                 router.push('/postagens')
+                setIsSubmit(false)
             }
         } catch (error: any) {
             toast.error('Error ao atualizar, tente novamente.')
+            setIsSubmit(false)
         }
     };
 
@@ -305,7 +309,9 @@ export default function Postagens({ params }: props) {
                     />
                 )}
 
-                <button type="submit" className="bg-indigo-500 text-white px-4 py-2 rounded-md">Enviar</button>
+                {isSubmit && <button type="submit" className="bg-red-500 text-white px-4 py-2 rounded-md">Enviando...</button>}
+
+                {!isSubmit && <button type="submit" className="bg-indigo-500 text-white px-4 py-2 rounded-md">Enviar</button>}
             </div>
 
         </form>

@@ -54,12 +54,14 @@ export default function Add() {
     const [typeOp, setTypeOp] = useState<any>([])
     const noteOp = Array.from({ length: 5 }, (_, index) => ({ value: index + 1, label: index + 1 }));
     const router = useRouter()
+    const [isSubmit, setIsSubmit] = useState(false)
 
     const needNote = watch('type')?.value !== 'review' ? false : true
     const watchType = watch('type')
 
     const onSubmit = async (data: FormSchema) => {
         try {
+            setIsSubmit(true)
             const author = await getDocData<any>('admins', null, auth.currentUser?.uid)
             const value = { value: author?.name, label: author?.name, socialMedia: author?.socialMedia }
 
@@ -88,12 +90,14 @@ export default function Add() {
                 const subcolecaoRef = doc(db, "posts", `${idCollection}/nota/${auth.currentUser?.uid}`);
                 await setDoc(subcolecaoRef, { note: data.note?.value });
             }
-            [...data.sessions, '/', '/postagens'].forEach(async (session) => {
+            [...data.sessions.map((item) => item.value), '/', '/postagens'].forEach(async (session) => {
                 const res = await (await fetch(`/api/revalidate?path=${session}`)).json()
             })
             router.push('/postagens/' + 1)
+            setIsSubmit(false)
         } catch (error: any) {
             toast.error(error.message as string)
+            setIsSubmit(false)
         }
 
     };
@@ -238,7 +242,10 @@ export default function Add() {
                     />
                 )}
 
-                <button type="submit" className="bg-indigo-500 text-white px-4 py-2 rounded-md">Enviar</button>
+                {isSubmit && <button type="submit" className="bg-red-500 text-white px-4 py-2 rounded-md">Enviando...</button>}
+
+                {!isSubmit && <button type="submit" className="bg-indigo-500 text-white px-4 py-2 rounded-md">Enviar</button>}
+
             </div>
 
         </form>
