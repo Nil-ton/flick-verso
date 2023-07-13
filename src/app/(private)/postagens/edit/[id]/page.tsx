@@ -73,8 +73,8 @@ export default function Postagens({ params }: props) {
     const watchType = watch('type')
 
     const onSubmit = async (data: FormSchema) => {
+        setIsSubmit(true)
         try {
-            setIsSubmit(true)
             const author = await getDocData<any>('admins', null, auth.currentUser?.uid)
             const value = { value: author.name, label: author.name, socialMedia: author.socialMedia }
             const dataDTO = {
@@ -118,12 +118,11 @@ export default function Postagens({ params }: props) {
                     const res = await (await fetch(`/api/revalidate?path=${session}`)).json()
                 })
                 router.push('/postagens')
-                setIsSubmit(false)
             }
         } catch (error: any) {
             toast.error('Error ao atualizar, tente novamente.')
-            setIsSubmit(false)
         }
+        setIsSubmit(false)
     };
 
     useEffect(() => {

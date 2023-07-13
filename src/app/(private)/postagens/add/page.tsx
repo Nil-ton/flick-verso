@@ -60,8 +60,8 @@ export default function Add() {
     const watchType = watch('type')
 
     const onSubmit = async (data: FormSchema) => {
+        setIsSubmit(true)
         try {
-            setIsSubmit(true)
             const author = await getDocData<any>('admins', null, auth.currentUser?.uid)
             const value = { value: author?.name, label: author?.name, socialMedia: author?.socialMedia }
 
@@ -94,11 +94,10 @@ export default function Add() {
                 const res = await (await fetch(`/api/revalidate?path=${session}`)).json()
             })
             router.push('/postagens/' + 1)
-            setIsSubmit(false)
         } catch (error: any) {
             toast.error(error.message as string)
-            setIsSubmit(false)
         }
+        setIsSubmit(true)
 
     };
 
