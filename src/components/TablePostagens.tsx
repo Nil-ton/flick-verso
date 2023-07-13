@@ -5,7 +5,8 @@ import React, { useState, useEffect } from 'react';
 import { redirect, useRouter } from "next/navigation";
 import Pagination from "./Pagination";
 import { TwitterShareButton } from "react-share";
-import { FaTwitter } from "react-icons/fa";
+import { FaLink, FaTwitter } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 type props = {
     posts: IPosts[] | undefined
@@ -34,6 +35,19 @@ export function TablePostagens({ posts, search, currentPage }: props) {
             return router.push(`/postagens/${page}/${search}`)
         }
         router.push(`/postagens/${page}`)
+    };
+
+    const handleCopyClick = (value: string) => {
+        // Copia o texto para a área de transferência
+        navigator.clipboard.writeText(value)
+            .then(() => {
+                // O texto foi copiado com sucesso
+                toast.success('Texto copiado com sucesso!');
+            })
+            .catch((error) => {
+                // Houve um erro ao tentar copiar o texto
+                toast.error('Texto copiado com sucesso!');
+            });
     };
 
 
@@ -85,6 +99,7 @@ export function TablePostagens({ posts, search, currentPage }: props) {
                                 <TwitterShareButton url={`https://flickverso.com.br/${item.uid}`} title={item.title}>
                                     <FaTwitter />
                                 </TwitterShareButton>
+                                <button onClick={() => handleCopyClick(`https://flickverso.com.br/${item.uid}`)}><FaLink /></button>
                             </td>
                         </tr>
                     ))}
