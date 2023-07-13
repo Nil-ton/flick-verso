@@ -49,7 +49,7 @@ export default async function Home({ params }: props) {
             )}
             {posts && posts?.length < 10 && (
                 <Link
-                    href={Number(params.page) - 1 === 1 ? '/' : '/home/' + (Number(params.page) - 1)}
+                    href={Number(params.page) - 1 === 1 ? '/home' : '/home/' + (Number(params.page) - 1)}
                     className="cursor-pointer inline-block bg-gray-200 rounded-full text-center text-lg px-3 py-1 font-semibold text-gray-700 mr-2 mb-2"
                 >
                     Voltar

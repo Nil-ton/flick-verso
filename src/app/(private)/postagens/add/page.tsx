@@ -90,7 +90,7 @@ export default function Add() {
                 const subcolecaoRef = doc(db, "posts", `${idCollection}/nota/${auth.currentUser?.uid}`);
                 await setDoc(subcolecaoRef, { note: data.note?.value });
             }
-            ['/', '/postagens'].forEach(async (session) => {
+            [...data.sessions.map(item => item.value), '/home', '/postagens'].forEach(async (session) => {
                 const res = await (await fetch(`/api/revalidate?path=${session}`)).json()
             })
             router.push('/postagens/' + 1)
