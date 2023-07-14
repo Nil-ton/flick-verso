@@ -84,6 +84,7 @@ export default function Postagens({ params }: props) {
                 type: data.type.value,
                 author: value,
                 updatedAt: Timestamp.now(),
+                richText: data.richText.replace('<img', '<img loading="lazy" class="object-cover aspect-video w-full h-[377px]"')
             }
 
             delete dataDTO.note
