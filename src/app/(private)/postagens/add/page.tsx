@@ -68,7 +68,7 @@ export default function Add() {
             const dataDTO = {
                 ...data,
                 keywords: data.keywords.split(',').map(item => item.toLowerCase().trim()),
-                sessions: data.sessions.map((item) => item.value),
+                sessions: data.sessions.map((item) => `/${item.value}`),
                 type: data.type.value,
                 author: value,
                 createdAt: Timestamp.now()

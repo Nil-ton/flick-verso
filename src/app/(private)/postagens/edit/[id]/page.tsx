@@ -80,7 +80,7 @@ export default function Postagens({ params }: props) {
             const dataDTO = {
                 ...data,
                 keywords: data.keywords.split(',').map(item => item.toLowerCase().trim()),
-                sessions: data.sessions.map((item) => item.value),
+                sessions: data.sessions.map((item) => `/${item.value}`),
                 type: data.type.value,
                 author: value,
                 updatedAt: Timestamp.now(),
@@ -201,7 +201,6 @@ export default function Postagens({ params }: props) {
             })
         })()
     }, [params.id, typeOp, sessionsOp])
-
 
     return (
         <form className="flex gap-5" onSubmit={handleSubmit(onSubmit)}>
