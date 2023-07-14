@@ -19,7 +19,7 @@ export function AdsManga({ affiliatedAds }: props) {
 
     return (
         <Swiper
-            slidesPerView={2}
+            slidesPerView={3}
             navigation={true}
             modules={[Navigation]}
             className='my-5'
@@ -34,11 +34,11 @@ export function AdsManga({ affiliatedAds }: props) {
         >
             {mangas.map((item, i) => (
                 <SwiperSlide key={item.affiliatedLink}>
-                    <a href={item.affiliatedLink} className="w-[285px] flex items-center gap-3">
+                    <a href={item.affiliatedLink} className="md:w-[285px] flex items-center gap-3">
                         <picture>
                             <img className="w-[100px] h-[173px] object-fill rounded-ss-md" width={1200} height={638} src={item.image} alt={"manga" + i} />
                         </picture>
-                        <div className="flex flex-col">
+                        <div className="hidden flex-col md:flex">
                             <span className="text-slate-700 sm:w-full md:w-[110px] w-[100px] font-bold">{item.title}</span>
                             <span className="text-red-800 text-xl font-bold">R$ {item.price}</span>
                         </div>
