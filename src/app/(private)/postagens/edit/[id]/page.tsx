@@ -91,6 +91,7 @@ export default function Postagens({ params }: props) {
             const docRefOriginal = doc(db, 'posts', params.id);
             const docRef = doc(db, 'posts', idCollection as string);
             const docSnapshot = await getDoc(docRef);
+            const pathUpdate = [...dataDTO.sessions, '/postagens', `/${idCollection}`]
 
             if (path === idCollection) {
                 await setDoc(docRef, dataDTO, { merge: true });
@@ -99,7 +100,6 @@ export default function Postagens({ params }: props) {
                     const subcolecaoRef = doc(db, "posts", `${idCollection}/nota/${auth.currentUser?.uid}`);
                     await setDoc(subcolecaoRef, { note: data.note?.value });
                 }
-                const pathUpdate = [...dataDTO.sessions, '/postagens', `/${idCollection}`]
                 pathUpdate.forEach(async (session) => {
                     await fetch(`/api/revalidate?path=${session}`)
                 })
@@ -118,8 +118,6 @@ export default function Postagens({ params }: props) {
                     const subcolecaoRef = doc(db, "posts", `${idCollection}/nota/${auth.currentUser?.uid}`);
                     await setDoc(subcolecaoRef, { note: data.note?.value });
                 }
-
-                const pathUpdate = [...dataDTO.sessions, '/postagens']
 
                 pathUpdate.forEach(async (session) => {
                     await fetch(`/api/revalidate?path=${session}`)
