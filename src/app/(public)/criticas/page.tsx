@@ -10,9 +10,6 @@ export const metadata: Metadata = {
     title: 'Flick Verso | Críticas',
     description: 'Explore as análises detalhadas de animes, séries e filmes em nosso site. Descubra as melhores críticas que irão ajudá-lo a escolher suas próximas maratonas. Opiniões imparciais, análises aprofundadas e insights valiosos para os fãs de entretenimento. Leia agora e encontre as melhores recomendações para a sua lista de assistir.',
     keywords: "críticas de animes, críticas de séries, críticas de filmes, análises de animes, análises de séries, análises de filmes, recomendações de animes, recomendações de séries, recomendações de filmes, opiniões de animes, opiniões de séries, opiniões de filmes, análises imparciais, análises aprofundadas, insights de entretenimento.",
-    openGraph: {
-        images: '/favicon.png',
-    },
 }
 
 

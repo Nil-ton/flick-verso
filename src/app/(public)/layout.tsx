@@ -13,7 +13,11 @@ export const metadata: Metadata = {
   description: 'Explore o universo dos filmes, séries e animes no FlickVerso. Descubra análises aprofundadas, resenhas envolventes e recomendações exclusivas, enquanto mergulha em uma jornada cinematográfica e animada sem limites. Seja bem-vindo(a) a um mundo de entretenimento que atravessa as telas e desvenda histórias cativantes.',
   keywords: "animes, filmes, séries, críticas, análises, resenhas, recomendações, entretenimento, cultura pop, geek, cinema, televisão, animação, avaliações, tendências, lançamentos, personagens, episódios, trailers, notícias, streaming, diversão, fandom, maratonas.",
   openGraph: {
-    images: '/favicon.ico',
+    images: ['https://flickverso.com.br/favicon.ico'],
+  },
+  icons: {
+    icon: 'https://flickverso.com.br/favicon.ico',
+    apple: 'https://flickverso.com.br/favicon.ico'
   },
 }
 

@@ -9,9 +9,6 @@ export const metadata: Metadata = {
     title: 'Flick Verso | Notícias',
     description: 'Fique por dentro das últimas notícias do mundo do entretenimento no FlickVerso. Aqui você encontrará informações fresquinhas sobre filmes, séries e animes, mantendo-se atualizado(a) sobre os lançamentos, eventos e novidades mais empolgantes da indústria. Prepare-se para ser o primeiro a saber e compartilhe a emoção com outros entusiastas!',
     keywords: "notícias de entretenimento, lançamentos, eventos, filmes, séries, animes, novidades",
-    openGraph: {
-        images: '/favicon.png',
-    },
 }
 
 export default async function Home() {
