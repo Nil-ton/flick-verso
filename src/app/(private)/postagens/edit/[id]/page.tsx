@@ -99,9 +99,9 @@ export default function Postagens({ params }: props) {
                     const subcolecaoRef = doc(db, "posts", `${idCollection}/nota/${auth.currentUser?.uid}`);
                     await setDoc(subcolecaoRef, { note: data.note?.value });
                 }
-                const pathUpdate = [...data.sessions.map(item => item.value), '/postagens']
+                const pathUpdate = [...dataDTO.sessions, '/postagens']
                 pathUpdate.forEach(async (session) => {
-                    const res = await (await fetch(`/api/revalidate?path=${session}`)).json()
+                    await fetch(`/api/revalidate?path=${session}`)
                 })
                 router.push('/postagens')
             } else {
@@ -119,10 +119,10 @@ export default function Postagens({ params }: props) {
                     await setDoc(subcolecaoRef, { note: data.note?.value });
                 }
 
-                const pathUpdate = [...data.sessions.map(item => item.value), '/postagens']
+                const pathUpdate = [...dataDTO.sessions, '/postagens']
 
                 pathUpdate.forEach(async (session) => {
-                    const res = await (await fetch(`/api/revalidate?path=${session}`)).json()
+                    await fetch(`/api/revalidate?path=${session}`)
                 })
                 router.push('/postagens')
             }
