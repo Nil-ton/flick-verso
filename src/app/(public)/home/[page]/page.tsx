@@ -19,10 +19,10 @@ export default async function Home({ params }: props) {
     const slice = posts?.slice(3)
 
     if (!page || page === 1) {
-        return redirect('/')
+        return redirect('/home')
     }
     if (!posts) {
-        return redirect('/')
+        return redirect('/home')
     }
 
     return (
