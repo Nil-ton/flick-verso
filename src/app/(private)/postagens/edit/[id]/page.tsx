@@ -199,7 +199,10 @@ export default function Postagens({ params }: props) {
 
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className="flex gap-5">
+        <form className="flex gap-5">
+            <div className="w-full">
+
+            </div>
             <div className="shrink-0 w-[70%]">
                 <div className="mb-4">
                     <label htmlFor="titulo" className="block mb-1 font-semibold">Título:</label>
@@ -312,7 +315,6 @@ export default function Postagens({ params }: props) {
 
                 {!isSubmit && <button type="submit" className="bg-indigo-500 text-white px-4 py-2 rounded-md">Enviar</button>}
             </div>
-
         </form>
     )
 }

@@ -5,6 +5,9 @@ import '../globals.css'
 import Head from 'next/head'
 import Script from 'next/script'
 import LgpdForm from '@/components/LgpdForm'
+import { AdsManga } from '@/components/AdsManga'
+import { getData } from '@/hooks/getData'
+import { AffiliatedLink } from '../type'
 
 export const revalidate = 3600
 
@@ -21,12 +24,12 @@ export const metadata: Metadata = {
   },
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-
+  const affiliatedAds = await getData<AffiliatedLink[]>('ads')
   return (
     <html lang="pt-br">
       <head>
@@ -52,6 +55,7 @@ export default function RootLayout({
       <body>
         <LgpdForm />
         <Header />
+        {affiliatedAds && <AdsManga affiliatedAds={affiliatedAds} />}
         <main className='min-h-screen'>
           {children}
         </main>

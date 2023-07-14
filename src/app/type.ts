@@ -25,3 +25,12 @@ export type ISessions = {
     title: string,
     updatedAt: string
 }
+
+
+export interface AffiliatedLink {
+    affiliatedLink: string;
+    createdAt: string;
+    image: string;
+    price: string;
+    title: string;
+}

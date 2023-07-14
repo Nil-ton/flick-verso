@@ -16,12 +16,12 @@ type props = {
 
 export default async function Home({ params }: props) {
     const page = Number(params.page)
-    const pageSize = 11
-    const posts = await getDataWithFilter<IPosts[]>('posts', { page, pageSize, where: where('sessions', "array-contains", "series") })
-
     if (!page || page === 1) {
         return redirect('/series')
     }
+    const pageSize = 11
+    const posts = await getDataWithFilter<IPosts[]>('posts', { page, pageSize, where: where('sessions', "array-contains", "series") })
+
     if (!posts) {
         return redirect('/series')
     }

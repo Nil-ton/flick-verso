@@ -1,4 +1,3 @@
-import { auth } from "@/service/firebase"
 import { revalidatePath } from "next/cache"
 import { NextRequest, NextResponse } from "next/server"
 

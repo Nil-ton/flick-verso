@@ -8,8 +8,6 @@ import { getSubCollection } from "@/hooks/getSubCollection"
 import { where } from "firebase/firestore"
 import { Metadata } from "next"
 import { notFound } from "next/navigation"
-import Script from "next/script"
-import { FaStar } from "react-icons/fa"
 
 type props = {
     params: {

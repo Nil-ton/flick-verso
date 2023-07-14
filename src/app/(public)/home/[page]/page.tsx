@@ -14,13 +14,13 @@ type props = {
 
 export default async function Home({ params }: props) {
     const page = Number(params.page)
+    if (!page || page === 1) {
+        return redirect('/home')
+    }
     const posts = await getData<IPosts[]>('posts', page, 11)
     const lastPostSlice = posts?.slice(0, 3)
     const slice = posts?.slice(3)
 
-    if (!page || page === 1) {
-        return redirect('/home')
-    }
     if (!posts) {
         return redirect('/home')
     }
