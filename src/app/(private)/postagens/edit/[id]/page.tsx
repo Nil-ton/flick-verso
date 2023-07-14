@@ -99,7 +99,7 @@ export default function Postagens({ params }: props) {
                     const subcolecaoRef = doc(db, "posts", `${idCollection}/nota/${auth.currentUser?.uid}`);
                     await setDoc(subcolecaoRef, { note: data.note?.value });
                 }
-                const pathUpdate = [...dataDTO.sessions, '/postagens']
+                const pathUpdate = [...dataDTO.sessions, '/postagens', `/${idCollection}`]
                 pathUpdate.forEach(async (session) => {
                     await fetch(`/api/revalidate?path=${session}`)
                 })
