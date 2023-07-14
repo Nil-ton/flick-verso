@@ -148,7 +148,7 @@ export default async function Page({ params }: props) {
                 </div>
 
                 <div className="mt-5">
-                    <div className="prose-2xl prose prose-cyan prose-img:rounded-sm" dangerouslySetInnerHTML={{ __html: post.richText.replace('<img', '<img loading="lazy"') }} />
+                    <div className="prose-2xl prose prose-cyan prose-img:rounded-sm" dangerouslySetInnerHTML={{ __html: post.richText.replace('<img', '<img loading="lazy" class="object-cover aspect-video w-full h-[377px]"') }} />
                 </div>
 
                 {note[0] && <NoteReview note={note} />}
