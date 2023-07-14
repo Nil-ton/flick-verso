@@ -206,7 +206,7 @@ export default function Postagens({ params }: props) {
 
 
     return (
-        <form className="flex gap-5">
+        <form className="flex gap-5" onSubmit={handleSubmit(onSubmit)}>
             <div className="w-full">
 
             </div>
