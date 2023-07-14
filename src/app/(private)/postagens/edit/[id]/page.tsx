@@ -99,6 +99,10 @@ export default function Postagens({ params }: props) {
                     const subcolecaoRef = doc(db, "posts", `${idCollection}/nota/${auth.currentUser?.uid}`);
                     await setDoc(subcolecaoRef, { note: data.note?.value });
                 }
+                const pathUpdate = [...data.sessions.map(item => item.value), '/postagens']
+                pathUpdate.forEach(async (session) => {
+                    const res = await (await fetch(`/api/revalidate?path=${session}`)).json()
+                })
                 router.push('/postagens')
             } else {
                 if (docSnapshot.exists()) {
@@ -114,7 +118,10 @@ export default function Postagens({ params }: props) {
                     const subcolecaoRef = doc(db, "posts", `${idCollection}/nota/${auth.currentUser?.uid}`);
                     await setDoc(subcolecaoRef, { note: data.note?.value });
                 }
-                [...data.sessions.map(item => item.value), '/postagens'].forEach(async (session) => {
+
+                const pathUpdate = [...data.sessions.map(item => item.value), '/postagens']
+
+                pathUpdate.forEach(async (session) => {
                     const res = await (await fetch(`/api/revalidate?path=${session}`)).json()
                 })
                 router.push('/postagens')
