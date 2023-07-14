@@ -11,11 +11,6 @@ type props = {
 }
 
 export function AdsManga({ affiliatedAds }: props) {
-    const [mangas, setMangas] = useState<AffiliatedLink[]>([])
-
-    useEffect(() => {
-        setMangas(affiliatedAds)
-    }, [affiliatedAds])
 
     return (
         <Swiper
@@ -32,11 +27,11 @@ export function AdsManga({ affiliatedAds }: props) {
                 },
             }}
         >
-            {mangas.map((item, i) => (
+            {affiliatedAds.map((item, i) => (
                 <SwiperSlide key={item.affiliatedLink}>
                     <a href={item.affiliatedLink} className="md:w-[285px] flex items-center gap-3">
                         <picture>
-                            <img className="w-[100px] h-[173px] object-fill rounded-ss-md" width={1200} height={638} src={item.image} alt={"manga" + i} />
+                            <img loading='lazy' className="w-[100px] h-[173px] object-fill rounded-ss-md" width={1200} height={638} src={item.image} alt={"manga" + i} />
                         </picture>
                         <div className="hidden flex-col md:flex">
                             <span className="text-slate-700 sm:w-full md:w-[110px] w-[100px] font-bold">{item.title}</span>
