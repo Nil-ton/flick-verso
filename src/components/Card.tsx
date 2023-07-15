@@ -50,6 +50,7 @@ export async function Card({ post, preview }: props) {
                                 className={`${value <= Number(note?.[0].note) ? 'text-yellow-400' : 'text-gray-400'}`}
                             />
                         ))}
+                        
                     </div>
                 )}
             </div>
