@@ -140,7 +140,7 @@ export default function Postagens({ params }: props) {
             const sessions = await getData<any>('sessions')
             setSessionOp(sessions?.map((item: any) => (
                 {
-                    value: item.slug,
+                    value: item.uid,
                     label: item.title
                 }
             )))
