@@ -133,7 +133,7 @@ export default function Add() {
     }, [resetField, watchType?.value])
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className="flex gap-5">
+        <form onSubmit={handleSubmit(async (data) => await onSubmit(data))} className="flex gap-5">
             <div className="shrink-0 w-[70%]">
                 <div className="mb-4">
                     <label htmlFor="titulo" className="block mb-1 font-semibold">Título:</label>
