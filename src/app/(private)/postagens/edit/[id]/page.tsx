@@ -65,7 +65,6 @@ export default function Postagens({ params }: props) {
     const router = useRouter()
     const pathname = usePathname()
     const path = pathname.split('/')[3]
-    const dataDoc = getDocData<IPosts>('posts', params.id)
     const subCollection = getSubCollection<{ note: string }[]>(params.id, 'nota')
     const [isSubmit, setIsSubmit] = useState(false)
 
@@ -91,7 +90,7 @@ export default function Postagens({ params }: props) {
             const docRefOriginal = doc(db, 'posts', params.id);
             const docRef = doc(db, 'posts', idCollection as string);
             const docSnapshot = await getDoc(docRef);
-            const pathUpdate = [...dataDTO.sessions, '/postagens', `/${idCollection}`, '/home']
+            const pathUpdate = [...dataDTO.sessions.map((item) => `/${item}`), '/postagens', `/${idCollection}`, '/home']
 
             if (path === idCollection) {
                 await setDoc(docRef, dataDTO, { merge: true });
@@ -175,7 +174,7 @@ export default function Postagens({ params }: props) {
 
     useEffect(() => {
         (async () => {
-            const data = await dataDoc
+            const data = await getDocData<IPosts>('posts', params.id)
             const entities = Object.entries(data || [])
             entities.forEach((item: any) => {
                 switch (item[0]) {

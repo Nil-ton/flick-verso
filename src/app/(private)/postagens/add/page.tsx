@@ -78,7 +78,7 @@ export default function Add() {
             const idCollection = replaceSpacesWithHyphens(data.title)
             const docRef = doc(db, 'posts', idCollection as string);
             const docSnapshot = await getDoc(docRef);
-            const pathUpdate = [...dataDTO.sessions, '/postagens', `/${idCollection}`, '/home']
+            const pathUpdate = [...dataDTO.sessions.map((item) => `/${item}`), '/postagens', `/${idCollection}`, '/home']
 
             if (docSnapshot.exists()) {
                 toast.error('Já existe uma postagem com esse nome.')
@@ -98,8 +98,7 @@ export default function Add() {
         } catch (error: any) {
             toast.error(error.message as string)
         }
-        setIsSubmit(true)
-
+        setIsSubmit(false)
     };
 
     useEffect(() => {
@@ -107,7 +106,7 @@ export default function Add() {
             const sessions = await getData<any>('sessions')
             setSessionOp(sessions?.map((item: any) => (
                 {
-                    value: item.slug,
+                    value: item.uid,
                     label: item.title
                 }
             )))
@@ -242,7 +241,7 @@ export default function Add() {
                     />
                 )}
 
-                {isSubmit && <button type="submit" className="bg-red-500 text-white px-4 py-2 rounded-md">Enviando...</button>}
+                {isSubmit && <button type="button" className="bg-red-500 text-white px-4 py-2 rounded-md">Enviando...</button>}
 
                 {!isSubmit && <button type="submit" className="bg-indigo-500 text-white px-4 py-2 rounded-md">Enviar</button>}
 
