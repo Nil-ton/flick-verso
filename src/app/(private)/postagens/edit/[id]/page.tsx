@@ -80,7 +80,7 @@ export default function Postagens({ params }: props) {
             const dataDTO = {
                 ...data,
                 keywords: data.keywords.split(',').map(item => item.toLowerCase().trim()),
-                sessions: data.sessions.map((item) => `/${item.value}`),
+                sessions: data.sessions.map((item) => item.value),
                 type: data.type.value,
                 author: value,
                 updatedAt: Timestamp.now(),
@@ -91,7 +91,7 @@ export default function Postagens({ params }: props) {
             const docRefOriginal = doc(db, 'posts', params.id);
             const docRef = doc(db, 'posts', idCollection as string);
             const docSnapshot = await getDoc(docRef);
-            const pathUpdate = [...dataDTO.sessions, '/postagens', `/${idCollection}`]
+            const pathUpdate = [...dataDTO.sessions, '/postagens', `/${idCollection}`, '/home']
 
             if (path === idCollection) {
                 await setDoc(docRef, dataDTO, { merge: true });
@@ -141,7 +141,7 @@ export default function Postagens({ params }: props) {
             const sessions = await getData<any>('sessions')
             setSessionOp(sessions?.map((item: any) => (
                 {
-                    value: item.uid,
+                    value: item.slug,
                     label: item.title
                 }
             )))

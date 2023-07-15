@@ -68,7 +68,7 @@ export default function Add() {
             const dataDTO = {
                 ...data,
                 keywords: data.keywords.split(',').map(item => item.toLowerCase().trim()),
-                sessions: data.sessions.map((item) => `/${item.value}`),
+                sessions: data.sessions.map((item) => item.value),
                 type: data.type.value,
                 author: value,
                 createdAt: Timestamp.now()
@@ -78,7 +78,7 @@ export default function Add() {
             const idCollection = replaceSpacesWithHyphens(data.title)
             const docRef = doc(db, 'posts', idCollection as string);
             const docSnapshot = await getDoc(docRef);
-            const pathUpdate = [...dataDTO.sessions, '/postagens', `/${idCollection}`]
+            const pathUpdate = [...dataDTO.sessions, '/postagens', `/${idCollection}`, '/home']
 
             if (docSnapshot.exists()) {
                 toast.error('Já existe uma postagem com esse nome.')
@@ -107,7 +107,7 @@ export default function Add() {
             const sessions = await getData<any>('sessions')
             setSessionOp(sessions?.map((item: any) => (
                 {
-                    value: item.uid,
+                    value: item.slug,
                     label: item.title
                 }
             )))
