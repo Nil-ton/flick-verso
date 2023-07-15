@@ -33,7 +33,7 @@ export async function getData<T>(collectionName: string, page = 1, pageSize = 10
 
         return data as T
     } catch (error) {
-        console.log('Erro ao obter dados:', error);
+        console.log('Erro ao obter dados:' + collectionName, error);
     }
 };
 

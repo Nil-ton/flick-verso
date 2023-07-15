@@ -91,7 +91,7 @@ export default function Postagens({ params }: props) {
             const docRef = doc(db, 'posts', idCollection as string);
             const docSnapshot = await getDoc(docRef);
             const pathUpdate = [...dataDTO.sessions.map((item) => `/${item === 'reviews' ? 'criticas' : item}`), '/postagens', `/${idCollection}`, '/home']
-
+            console.log(pathUpdate)
             if (path === idCollection) {
                 await setDoc(docRef, dataDTO, { merge: true });
 
@@ -100,31 +100,32 @@ export default function Postagens({ params }: props) {
                     await setDoc(subcolecaoRef, { note: data.note?.value });
                 }
                 pathUpdate.forEach(async (session) => {
-                    await fetch(`/api/revalidate?path=${session}`)
+                    const res = await fetch(`/api/revalidate?path=${session}`)
+                    const data = await res.json()
+                    console.log(data)
                 })
-                router.push('/postagens')
-            } else {
-                if (docSnapshot.exists()) {
-                    toast.error('Já existe uma postagem com esse nome.')
-                    return;
-                }
-
-                await deleteDoc(docRefOriginal)
-
-                await setDoc(docRef, { ...dataDTO, createdAt: Timestamp.now() });
-
-                if (data.note) {
-                    const subcolecaoRef = doc(db, "posts", `${idCollection}/nota/${auth.currentUser?.uid}`);
-                    await setDoc(subcolecaoRef, { note: data.note?.value });
-                }
-
-                pathUpdate.forEach(async (session) => {
-                    await fetch(`/api/revalidate?path=${session}`)
-                })
-                router.push('/postagens')
+                return router.push('/postagens')
             }
+
+            if (docSnapshot.exists()) {
+                return toast.error('Já existe uma postagem com esse nome.')
+            }
+
+            await deleteDoc(docRefOriginal)
+
+            await setDoc(docRef, { ...dataDTO, createdAt: Timestamp.now() });
+
+            if (data.note) {
+                const subcolecaoRef = doc(db, "posts", `${idCollection}/nota/${auth.currentUser?.uid}`);
+                await setDoc(subcolecaoRef, { note: data.note?.value });
+            }
+
+            pathUpdate.forEach(async (session) => {
+                await fetch(`/api/revalidate?path=${session}`)
+            })
+            router.push('/postagens')
         } catch (error: any) {
-            toast.error('Error ao atualizar, tente novamente.')
+            return toast.error('Error ao atualizar, tente novamente.')
         }
         setIsSubmit(false)
     };
