@@ -151,7 +151,10 @@ export default async function Page({ params }: props) {
                     <div className="prose-2xl prose prose-cyan prose-img:rounded-sm" dangerouslySetInnerHTML={{ __html: post.richText }} />
                 </div>
 
-                {note[0] && <NoteReview note={note} />}
+                <div className="mt-10">
+                    {note[0] && <NoteReview note={note} />}
+                </div>
+
 
 
                 <div className="flex items-center flex-col gap-5">
