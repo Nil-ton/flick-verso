@@ -90,7 +90,7 @@ export default function Postagens({ params }: props) {
             const docRefOriginal = doc(db, 'posts', params.id);
             const docRef = doc(db, 'posts', idCollection as string);
             const docSnapshot = await getDoc(docRef);
-            const pathUpdate = [...dataDTO.sessions.map((item) => `/${item}`), '/postagens', `/${idCollection}`, '/home']
+            const pathUpdate = [...dataDTO.sessions.map((item) => `/${item === 'reviews' ? 'criticas' : item}`), '/postagens', `/${idCollection}`, '/home']
 
             if (path === idCollection) {
                 await setDoc(docRef, dataDTO, { merge: true });

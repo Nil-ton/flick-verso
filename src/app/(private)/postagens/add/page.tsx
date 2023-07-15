@@ -78,7 +78,7 @@ export default function Add() {
             const idCollection = replaceSpacesWithHyphens(data.title)
             const docRef = doc(db, 'posts', idCollection as string);
             const docSnapshot = await getDoc(docRef);
-            const pathUpdate = [...dataDTO.sessions.map((item) => `/${item}`), '/postagens', `/${idCollection}`, '/home']
+            const pathUpdate = [...dataDTO.sessions.map((item) => `/${item === 'reviews' ? 'criticas' : item}`), '/postagens', `/${idCollection}`, '/home']
 
             if (docSnapshot.exists()) {
                 toast.error('Já existe uma postagem com esse nome.')
