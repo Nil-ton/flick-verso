@@ -57,7 +57,6 @@ export default async function Page({ params }: props) {
     const recommeted = await fetchData<IFetchPosts>('posts', { sessions: session })
     const slice = recommeted?.posts?.filter((item) => item.uid !== params.postId)
 
-
     if (!post) {
         notFound()
     }
@@ -93,7 +92,7 @@ export default async function Page({ params }: props) {
                 },
                 "reviewRating": {
                     "@type": "Rating",
-                    "ratingValue": note?.[0].note,
+                    "ratingValue": note?.[0]?.note,
                     "bestRating": "5"
                 },
             }

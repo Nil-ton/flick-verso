@@ -32,8 +32,6 @@ export function PaginationScroll({ sessions, next_start_after }: props) {
             >
                 Ver Mais
             </button>}
-
-
         </>
     )
 }
