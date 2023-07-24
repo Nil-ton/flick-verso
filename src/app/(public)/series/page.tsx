@@ -1,9 +1,11 @@
-import { IPosts } from "@/app/type";
+import { IFetchPosts } from "@/app/type";
 import { Card } from "@/components/Card";
 import { LastNews } from "@/components/LastNews";
+import { PaginationScroll } from "@/components/PaginationScrool";
+import { fetchData } from "@/hooks/fetchData";
 import { getDataWithFilter } from "@/hooks/getDataWithFilter";
-import { where } from "firebase/firestore";
 import { Metadata } from "next";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
     title: 'Flick Verso | Séries',
@@ -12,17 +14,21 @@ export const metadata: Metadata = {
 }
 
 export default async function Home() {
-    const page = 1
-    const pageSize = 10
-    const posts = await getDataWithFilter<IPosts[]>('posts', { page, pageSize, where: where('sessions', "array-contains", "series") })
-    const lastPosts = posts?.slice(0, 3)
-    const slicePosts = posts?.slice(3)
+    const data = await fetchData<IFetchPosts>('posts', { sessions: "series" })
+    const lastPosts = data?.posts?.slice(0, 3)
+    const slicePosts = data?.posts?.slice(3)
 
     return (
         <div className="flex flex-col gap-10">
             <LastNews posts={lastPosts} />
 
             {slicePosts?.map((item) => <Card key={item.uid} post={item} />)}
+
+            {data?.posts?.length === 10 && (
+                <Suspense fallback={<p>Loading...</p>}>
+                    <PaginationScroll sessions="series" next_start_after={data?.next_start_after} />
+                </Suspense>
+            )}
         </div >
     )
 }

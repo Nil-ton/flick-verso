@@ -90,8 +90,7 @@ export default function Postagens({ params }: props) {
             const docRefOriginal = doc(db, 'posts', params.id);
             const docRef = doc(db, 'posts', idCollection as string);
             const docSnapshot = await getDoc(docRef);
-            const pathUpdate = [...dataDTO.sessions.map((item) => `/${item === 'reviews' ? 'criticas' : item}`), '/postagens', `/${idCollection}`, '/home']
-            console.log(pathUpdate)
+
             if (path === idCollection) {
                 await setDoc(docRef, dataDTO, { merge: true });
 
@@ -99,11 +98,7 @@ export default function Postagens({ params }: props) {
                     const subcolecaoRef = doc(db, "posts", `${idCollection}/nota/${auth.currentUser?.uid}`);
                     await setDoc(subcolecaoRef, { note: data.note?.value });
                 }
-                pathUpdate.forEach(async (session) => {
-                    const res = await fetch(`/api/revalidate?path=${session}`)
-                    const data = await res.json()
-                    console.log(data)
-                })
+                await fetch(`/api/revalidate?path=/`)
                 return router.push('/postagens')
             }
 
@@ -120,9 +115,7 @@ export default function Postagens({ params }: props) {
                 await setDoc(subcolecaoRef, { note: data.note?.value });
             }
 
-            pathUpdate.forEach(async (session) => {
-                await fetch(`/api/revalidate?path=${session}`)
-            })
+            await fetch(`/api/revalidate?path=/`)
             router.push('/postagens')
         } catch (error: any) {
             return toast.error('Error ao atualizar, tente novamente.')

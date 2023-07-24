@@ -19,6 +19,11 @@ export interface IPosts {
     dateUpdateAt?: string
 }
 
+export type IFetchPosts = {
+    posts: IPosts[],
+    next_start_after?: string
+}
+
 export type ISessions = {
     createdAt: string,
     slug: string,

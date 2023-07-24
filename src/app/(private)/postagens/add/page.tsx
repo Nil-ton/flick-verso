@@ -78,7 +78,6 @@ export default function Add() {
             const idCollection = replaceSpacesWithHyphens(data.title)
             const docRef = doc(db, 'posts', idCollection as string);
             const docSnapshot = await getDoc(docRef);
-            const pathUpdate = [...dataDTO.sessions.map((item) => `/${item === 'reviews' ? 'criticas' : item}`), '/postagens', `/${idCollection}`, '/home']
 
             if (docSnapshot.exists()) {
                 toast.error('Já existe uma postagem com esse nome.')
@@ -91,9 +90,8 @@ export default function Add() {
                 const subcolecaoRef = doc(db, "posts", `${idCollection}/nota/${auth.currentUser?.uid}`);
                 await setDoc(subcolecaoRef, { note: data.note?.value });
             }
-            pathUpdate.forEach(async (session) => {
-                await fetch(`/api/revalidate?path=${session}`)
-            })
+            await fetch(`/api/revalidate?path=/`)
+
             router.push('/postagens/' + 1)
         } catch (error: any) {
             toast.error(error.message as string)

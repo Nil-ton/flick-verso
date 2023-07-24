@@ -1,7 +1,9 @@
-import { IPosts } from "@/app/type"
+import { IFetchPosts, IPosts } from "@/app/type"
 import { Card } from "@/components/Card"
 import { NoteReview } from "@/components/NoteReview"
 import { Shered } from "@/components/Shared"
+import { fetchData } from "@/hooks/fetchData"
+import { fetchNoteData } from "@/hooks/fetchNoteData"
 import { getDataWithFilter } from "@/hooks/getDataWithFilter"
 import { getDocData } from "@/hooks/getDoc"
 import { getSubCollection } from "@/hooks/getSubCollection"
@@ -47,13 +49,13 @@ export async function generateMetadata({ params }: props): Promise<Metadata> {
 }
 
 export default async function Page({ params }: props) {
-    const post = await getDocData<IPosts>('posts', params.postId)
-    const note = await getSubCollection<{ note: string }[]>(String(post?.title), 'nota')
+    const post = await fetchData<IPosts>('posts', { byId: params.postId })
+    const note = await fetchNoteData<{ note: string }[]>(params.postId)
     const validSessions = ['animes', 'filmes', 'series', 'noticias'];
-    const session = post?.sessions.find((item) => validSessions.includes(item));
-    const isNoticia = post?.sessions.find(item => item === 'noticias')
-    const recommeted = await getDataWithFilter<IPosts[]>('posts', { page: 1, pageSize: 11, where: where('sessions', "array-contains", session) })
-    const slice = recommeted?.filter((item) => item.uid !== params.postId)
+    const session = post?.sessions?.find((item) => validSessions.includes(item));
+    const isNoticia = post?.sessions?.find(item => item === 'noticias')
+    const recommeted = await fetchData<IFetchPosts>('posts', { sessions: session })
+    const slice = recommeted?.posts?.filter((item) => item.uid !== params.postId)
 
 
     if (!post) {
@@ -65,13 +67,13 @@ export default async function Page({ params }: props) {
             return {
                 "@context": "https://schema.org",
                 "@type": 'Review',
-                "headline": post.title,
-                "image": post.thumbnail,
-                "datePublished": post.dateCreatedAt,
-                "dateModified": post.dateUpdateAt,
+                "headline": post?.title,
+                "image": post?.thumbnail,
+                "datePublished": post?.dateCreatedAt,
+                "dateModified": post?.dateUpdateAt,
                 "author": {
                     "@type": "Person",
-                    "name": post.author.value
+                    "name": post?.author.value
                 },
                 "publisher": {
                     "@type": "Organization",
@@ -83,11 +85,11 @@ export default async function Page({ params }: props) {
                 },
                 "mainEntityOfPage": {
                     "@type": "WebPage",
-                    "@id": `https://flickverso.com.br/${post.uid}`
+                    "@id": `https://flickverso.com.br/${post?.uid}`
                 },
                 "itemReviewed": {
                     "@type": session === 'filmes' ? 'Movie' : "CreativeWorkSeason",
-                    "name": post.title,
+                    "name": post?.title,
                 },
                 "reviewRating": {
                     "@type": "Rating",
@@ -100,13 +102,13 @@ export default async function Page({ params }: props) {
         return {
             "@context": "https://schema.org",
             "@type": isNoticia ? "NewsArticle" : "BlogPosting",
-            "headline": post.title,
-            "image": post.thumbnail,
-            "datePublished": post.dateCreatedAt,
-            "dateModified": post.dateUpdateAt,
+            "headline": post?.title,
+            "image": post?.thumbnail,
+            "datePublished": post?.dateCreatedAt,
+            "dateModified": post?.dateUpdateAt,
             "author": {
                 "@type": "Person",
-                "name": post.author.value,
+                "name": post?.author?.value,
                 "url": "https://www.linkedin.com/in/nilton-oliveira-link/"
             },
             "publisher": {
@@ -119,7 +121,7 @@ export default async function Page({ params }: props) {
             },
             "mainEntityOfPage": {
                 "@type": "WebPage",
-                "@id": `https://flickverso.com.br/${post.uid}`
+                "@id": `https://flickverso.com.br/${post?.uid}`
             },
         }
     }
@@ -129,8 +131,8 @@ export default async function Page({ params }: props) {
         <div>
             <div className="mx-6 lg:mx-20">
                 <div>
-                    <h1 className="text-[34px] lg:text-[48px] font-bold">{post.title}</h1>
-                    <h2 className="text-zinc-700 text-[18px] lg:text-[22px]">{post.subtitle}</h2>
+                    <h1 className="text-[34px] lg:text-[48px] font-bold">{post?.title}</h1>
+                    <h2 className="text-zinc-700 text-[18px] lg:text-[22px]">{post?.subtitle}</h2>
                 </div>
 
                 <div className="flex lg:flex-row flex-col lg:gap-0 gap-3 justify-between text-[14px] lg:text-[16px]">
@@ -148,11 +150,13 @@ export default async function Page({ params }: props) {
                 </div>
 
                 <div className="mt-5">
-                    <div className="prose-2xl prose prose-cyan prose-img:rounded-sm" dangerouslySetInnerHTML={{ __html: post.richText }} />
+                    {post?.richText &&
+                        <div className="prose-2xl prose prose-cyan prose-img:rounded-sm" dangerouslySetInnerHTML={{ __html: post?.richText }} />
+                    }
                 </div>
 
                 <div className="mt-10">
-                    {note[0] && <NoteReview note={note} />}
+                    {note?.[0] && <NoteReview note={note} />}
                 </div>
 
 
@@ -166,7 +170,7 @@ export default async function Page({ params }: props) {
                 {slice?.map((item) => <div key={item.uid} className="mt-10"><Card post={item} /></div>)}
             </div>
 
-            <script id="application/ld+json" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(lg(post.type)) }}>
+            <script id="application/ld+json" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(lg(post?.type)) }}>
             </script>
         </div>
     )
