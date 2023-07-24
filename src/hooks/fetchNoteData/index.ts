@@ -5,7 +5,7 @@ export async function fetchNoteData<T>(doc_ref_name: string) {
 
         const resFetch = await fetch(`${process.env.NEXT_PUBLIC_API}/note/posts/${doc_ref_name}`)
         const dataFetch = await resFetch.json()
-        return data as T
+        return dataFetch as T
 
         return data as T
     } catch (error) {

@@ -61,6 +61,8 @@ export default async function Page({ params }: props) {
         notFound()
     }
 
+    console.log(note)
+
     const lg = (type: string) => {
         if (type === 'review') {
             return {
