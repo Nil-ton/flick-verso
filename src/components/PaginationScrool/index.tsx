@@ -30,7 +30,7 @@ export function PaginationScroll({ sessions, next_start_after }: props) {
                 className="cursor-pointer inline-block bg-gray-200 rounded-full text-center text-lg px-3 py-1 font-semibold text-gray-700 mr-2 mb-2"
                 onClick={async () => await handleSetDate(data?.next_start_after, limit)}
             >
-                Ver Mais {limit}
+                Ver Mais
             </button>}
 
 

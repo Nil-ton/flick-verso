@@ -4,23 +4,24 @@ type props = {
     sessions?: string
     byId?: string
 }
+const url = process.env.NEXT_PUBLIC_API
 export async function fetchData<T>(collectionName: string, params?: props) {
     try {
         let data: unknown[] = []
 
         if (params?.byId) {
-            const resFetch = await fetch(`${process.env.NEXT_PUBLIC_API}/${collectionName}/${params.byId}`)
+            const resFetch = await fetch(`${url}/${collectionName}/${params.byId}`)
             const dataFetch = await resFetch.json()
             return dataFetch as T
         }
 
         if (params?.next_start_after) {
-            const resFetch = await fetch(`${process.env.NEXT_PUBLIC_API}/${collectionName}${params?.sessions ? `?sessions=${params?.sessions}&` : '?'}start_after=${params?.next_start_after}&limit=${params?.limit ? params?.limit : 10}`)
+            const resFetch = await fetch(`${url}/${collectionName}${params?.sessions ? `?sessions=${params?.sessions}&` : '?'}start_after=${params?.next_start_after}&limit=${params?.limit ? params?.limit : 10}`)
             const dataFetch = await resFetch.json()
             data = dataFetch
         }
         if (!params?.next_start_after) {
-            const resFetch = await fetch(`${process.env.NEXT_PUBLIC_API}/${collectionName}${params?.sessions ? `?sessions=${params?.sessions}&` : '?'}limit=${params?.limit ? params?.limit : 10}`)
+            const resFetch = await fetch(`${url}/${collectionName}${params?.sessions ? `?sessions=${params?.sessions}&` : '?'}limit=${params?.limit ? params?.limit : 10}`)
             const dataFetch = await resFetch.json()
             data = dataFetch
         }
