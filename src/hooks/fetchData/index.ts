@@ -15,12 +15,12 @@ export async function fetchData<T>(collectionName: string, params?: props) {
         }
 
         if (params?.next_start_after) {
-            const resFetch = await fetch(`${process.env.NEXT_PUBLIC_API}/${collectionName}${params?.sessions ? `?sessions=${params?.sessions}&` : '?'}start_after=${params?.next_start_after}&limit=${params?.limit}`)
+            const resFetch = await fetch(`${process.env.NEXT_PUBLIC_API}/${collectionName}${params?.sessions ? `?sessions=${params?.sessions}&` : '?'}start_after=${params?.next_start_after}&limit=${params?.limit ? params?.limit : 10}`)
             const dataFetch = await resFetch.json()
             data = dataFetch
         }
         if (!params?.next_start_after) {
-            const resFetch = await fetch(`${process.env.NEXT_PUBLIC_API}/${collectionName}${params?.sessions ? `?sessions=${params?.sessions}&` : '?'}limit=${params?.limit}`)
+            const resFetch = await fetch(`${process.env.NEXT_PUBLIC_API}/${collectionName}${params?.sessions ? `?sessions=${params?.sessions}&` : '?'}limit=${params?.limit ? params?.limit : 10}`)
             const dataFetch = await resFetch.json()
             data = dataFetch
         }
