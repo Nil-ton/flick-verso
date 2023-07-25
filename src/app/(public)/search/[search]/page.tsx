@@ -1,6 +1,7 @@
-import { IPosts } from "@/app/type";
+import { IFetchPosts, IPosts } from "@/app/type";
 import { Card } from "@/components/Card";
 import { LastNews } from "@/components/LastNews";
+import { fetchData } from "@/hooks/fetchData";
 import { getData } from "@/hooks/getData";
 import { getDataWithFilter } from "@/hooks/getDataWithFilter";
 import { db } from "@/service/firebase";
@@ -21,12 +22,12 @@ export default async function Home({ params }: props) {
 
     const page = 1
     const pageSize = 10
-    const posts = await getDataWithFilter<IPosts[]>('posts', { page, pageSize, where: where('keywords', 'array-contains', searchTerm) })
+    const data = await fetchData<IFetchPosts>('posts', { keywords: searchTerm })
 
     if (!page) {
         return redirect('/')
     }
-    if (!posts) {
+    if (!data?.posts) {
         return notFound()
     }
     return (
@@ -35,8 +36,8 @@ export default async function Home({ params }: props) {
                 <span className="border-r-4 border-gray-500 h-[40px] w-[10px]"></span>
                 <h1>Pesquisa</h1>
             </div>
-            {posts?.map((item) => <Card key={item.uid} post={item} />)}
-            {posts?.length === 10 && (
+            {data?.posts?.map((item) => <Card key={item.uid} post={item} />)}
+            {data?.posts?.length === 10 && (
                 <Link
                     aria-label="Ver Mais"
                     href={'/home/' + 2}

@@ -1,7 +1,6 @@
 'use client'
 
 import { RichTextEditor } from "@/components/RichText";
-import { getData } from "@/hooks/getData";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";

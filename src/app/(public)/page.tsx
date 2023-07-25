@@ -4,6 +4,7 @@ import { Card } from "@/components/Card";
 import { LastNews } from "@/components/LastNews";
 import { PaginationScroll } from "@/components/PaginationScrool";
 import { Suspense } from "react";
+import { ViewMoreButton } from "@/components/ViewMoreButton";
 
 export default async function Home() {
   const data = await fetchData<IFetchPosts>('posts')
@@ -14,9 +15,7 @@ export default async function Home() {
       <LastNews posts={lastPosts} />
       {slicePosts?.map((item) => <Card key={item.uid} post={item} />)}
       {data?.posts?.length === 10 && (
-        <Suspense fallback={<p>Loading...</p>}>
-          <PaginationScroll next_start_after={data?.next_start_after} />
-        </Suspense>
+        <ViewMoreButton limit={20} pathname="home" />
       )}
     </div >
   )

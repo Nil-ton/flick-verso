@@ -4,10 +4,6 @@ import { NoteReview } from "@/components/NoteReview"
 import { Shered } from "@/components/Shared"
 import { fetchData } from "@/hooks/fetchData"
 import { fetchNoteData } from "@/hooks/fetchNoteData"
-import { getDataWithFilter } from "@/hooks/getDataWithFilter"
-import { getDocData } from "@/hooks/getDoc"
-import { getSubCollection } from "@/hooks/getSubCollection"
-import { where } from "firebase/firestore"
 import { Metadata } from "next"
 import { notFound } from "next/navigation"
 
@@ -18,7 +14,7 @@ type props = {
 }
 
 export async function generateMetadata({ params }: props): Promise<Metadata> {
-    const post = await getDocData<IPosts>('posts', params.postId)
+    const post = await fetchData<IPosts>('posts', { byId: params.postId })
 
     return {
         title: post?.title,
@@ -60,8 +56,6 @@ export default async function Page({ params }: props) {
     if (!post) {
         notFound()
     }
-
-    console.log(note)
 
     const lg = (type: string) => {
         if (type === 'review') {

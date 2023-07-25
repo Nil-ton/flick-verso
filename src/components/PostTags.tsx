@@ -3,7 +3,7 @@ import { ISessions } from "@/app/type";
 import { useRouter } from "next/navigation";
 
 type props = {
-    tags: (ISessions | null)[]
+    tags: (ISessions | undefined)[]
 }
 const PostTags = ({ tags = [] }: props) => {
     const router = useRouter()

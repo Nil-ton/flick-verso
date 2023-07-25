@@ -1,10 +1,9 @@
 import { IFetchPosts } from "@/app/type";
 import { Card } from "@/components/Card";
 import { LastNews } from "@/components/LastNews";
-import { PaginationScroll } from "@/components/PaginationScrool";
+import { ViewMoreButton } from "@/components/ViewMoreButton";
 import { fetchData } from "@/hooks/fetchData";
 import { Metadata } from "next";
-import { Suspense } from "react";
 
 export const metadata: Metadata = {
     title: 'Flick Verso | Filmes',
@@ -24,9 +23,7 @@ export default async function Home() {
             {slicePosts?.map((item) => <Card key={item.uid} post={item} />)}
 
             {data?.posts?.length === 10 && (
-                <Suspense fallback={<p>Loading...</p>}>
-                    <PaginationScroll sessions="filmes" next_start_after={data?.next_start_after} />
-                </Suspense>
+                <ViewMoreButton limit={20} pathname="filmes" />
             )}
         </div >
     )

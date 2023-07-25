@@ -1,10 +1,7 @@
 import { IPosts, ISessions } from "@/app/type"
-import { getData } from "@/hooks/getData"
-import Link from "next/link"
-import PostTags from "./PostTags"
-import { getDocData } from "@/hooks/getDoc"
 import { CardLastPost } from "./CardLastPost"
 import { CardLastPost2 } from "./CardLastPost2"
+import { fetchData } from "@/hooks/fetchData"
 
 type props = {
   posts: IPosts[] | undefined
@@ -15,7 +12,7 @@ export async function LastNews({ posts, preview }: props) {
   const tags = (sessions: string[]) => {
     let tag: (ISessions | null)[] = []
     const types = sessions.map(async (item) => {
-      const tags = await getDocData<ISessions>('sessions', item)
+      const tags = await fetchData<ISessions>('sessions', { byId: item })
       tag = tags as unknown as (ISessions | null)[]
     })
     return tag as (ISessions | null)[]

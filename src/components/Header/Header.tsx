@@ -4,20 +4,21 @@ import { useRouter } from "next/navigation";
 import { getData } from "@/hooks/getData";
 import Link from "next/link";
 import { FaInstagram, FaSearch, FaTwitter } from "react-icons/fa";
-import { ISessions } from "@/app/type";
+import { IFetchSessions, ISessions } from "@/app/type";
 import { Search } from "../Search";
 import { HeaderRoot } from "./Root";
+import { fetchData } from "@/hooks/fetchData";
 
 type props = {
     preview?: boolean
 }
 
 export async function Header({ preview }: props) {
-    const data = await getData<ISessions[]>('sessions')
+    const data = await fetchData<IFetchSessions>('sessions')
 
     return (
         <HeaderRoot>
-            <HamburguerMenu menu={data} preview={preview} />
+            <HamburguerMenu menu={data?.sessions} preview={preview} />
 
             <div className="flex justify-center font-bold text-2xl uppercase">
                 <Link href={preview ? '/preview' : '/'} aria-label="Pagina inicial">
@@ -27,7 +28,7 @@ export async function Header({ preview }: props) {
 
             <div className="lg:block hidden">
                 <ul className="flex gap-5 text-[18px] font-semibold">
-                    {data?.map((item) => (
+                    {data?.sessions?.map((item) => (
                         <li key={item.title} className="font-medium hover:text-zinc-600">
                             <Link href={preview ? '/preview' + item?.slug : item?.slug}>{item?.title}</Link>
                         </li>

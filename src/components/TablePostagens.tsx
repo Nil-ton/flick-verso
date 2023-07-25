@@ -1,12 +1,13 @@
 'use client'
 import Link from "next/link";
-import { IPosts } from "@/app/type"
+import { IFetchPosts, IPosts } from "@/app/type"
 import React, { useState, useEffect } from 'react';
-import { redirect, useRouter } from "next/navigation";
-import Pagination from "./Pagination";
 import { TwitterShareButton } from "react-share";
 import { FaLink, FaTwitter } from "react-icons/fa";
 import { toast } from "react-toastify";
+import { isMultipleOfTen } from "@/utils/isMultipleOfTen";
+import { fetchData } from "@/hooks/fetchData";
+import { replaceSpacesWithHyphens } from "@/utils/replaceSpacesWithHyphens";
 
 type props = {
     posts: IPosts[] | undefined
@@ -17,24 +18,26 @@ type props = {
 export function TablePostagens({ posts, search, currentPage }: props) {
     const [searchResults, setSearchResults] = useState(posts);
     const [inputSearch, setInputSearch] = useState(search)
-    const router = useRouter()
+    const [limit, setLimit] = useState(10)
 
     const handleSearch = async () => {
         if (inputSearch === "") {
-            return router.push(`/postagens`)
+            return setSearchResults(posts)
         }
-        return router.push(`/postagens/1/${inputSearch}`)
+        const data = await fetchData<IPosts>('posts', { byId: String(replaceSpacesWithHyphens(inputSearch)) })
+        setSearchResults([data] as any)
     };
+
+    const handleLimit = async () => {
+        const newLimit = limit + 10
+        const data = await fetchData<IFetchPosts>('posts', { limit: newLimit })
+        setSearchResults(data?.posts as any)
+        setLimit(newLimit)
+    };
+
 
     const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         return setInputSearch(e.target.value)
-    };
-
-    const handlePageChange = (page: number) => {
-        if (search) {
-            return router.push(`/postagens/${page}/${search}`)
-        }
-        router.push(`/postagens/${page}`)
     };
 
     const handleCopyClick = (value: string) => {
@@ -106,7 +109,13 @@ export function TablePostagens({ posts, search, currentPage }: props) {
                 </tbody>
             </table>
             <div className="mt-5">
-                <Pagination currentPage={currentPage || 0} onPageChange={handlePageChange} dataLenght={posts?.length} />
+                {isMultipleOfTen(searchResults?.length) && <button
+                    aria-label="Ver Mais"
+                    className="w-full cursor-pointer inline-block bg-gray-200 rounded-full text-center text-lg px-3 py-1 font-semibold text-gray-700 mr-2 mb-2"
+                    onClick={handleLimit}
+                >
+                    Ver Mais
+                </button>}
             </div>
         </>
     )

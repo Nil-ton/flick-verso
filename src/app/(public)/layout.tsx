@@ -6,8 +6,9 @@ import Head from 'next/head'
 import Script from 'next/script'
 import LgpdForm from '@/components/LgpdForm'
 import { AdsManga } from '@/components/AdsManga'
-import { getData } from '@/hooks/getData'
 import { AffiliatedLink } from '../type'
+import Providers from '@/components/ClientProvider'
+import { fetchData } from '@/hooks/fetchData'
 
 export const revalidate = 3600
 
@@ -29,7 +30,7 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  const affiliatedAds = await getData<AffiliatedLink[]>('ads')
+  // const affiliatedAds = await fetchData<AffiliatedLink[]>('ads')
   return (
     <html lang="pt-br">
       <head>
@@ -53,13 +54,15 @@ export default async function RootLayout({
         <meta name="google-site-verification" content="fEPDFwbZkylUTA1aFqToMUyX23ydDkNEcAzO9axzyIc" />
       </head>
       <body>
-        <LgpdForm />
-        <Header />
-        {affiliatedAds && <AdsManga affiliatedAds={affiliatedAds} />}
-        <main className='min-h-screen'>
-          {children}
-        </main>
-        <Footer />
+        <Providers>
+          <LgpdForm />
+          <Header />
+          {/* {affiliatedAds && <AdsManga affiliatedAds={affiliatedAds} />} */}
+          <main className='min-h-screen'>
+            {children}
+          </main>
+          <Footer />
+        </Providers>
       </body>
     </html>
   )

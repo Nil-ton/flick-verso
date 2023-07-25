@@ -1,7 +1,7 @@
 import { IPosts, ISessions } from "@/app/type";
 import Link from "next/link";
 import PostTags from "./PostTags";
-import { getDocData } from "@/hooks/getDoc";
+import { fetchData } from "@/hooks/fetchData";
 
 type props = {
     post: IPosts
@@ -9,7 +9,7 @@ type props = {
 }
 
 export async function CardLastPost({ post, preview }: props) {
-    const types = post.sessions.map(async (item) => await getDocData<ISessions>('sessions', item))
+    const types = post.sessions.map(async (item) => await fetchData<ISessions>('sessions', { byId: item }))
     const tags = await Promise.all(types)
     return (
         <picture className='row-span-2 relative'>

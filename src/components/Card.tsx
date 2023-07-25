@@ -1,9 +1,10 @@
-import { IPosts, ISessions } from "@/app/type"
-import { getDocData } from "@/hooks/getDoc"
-import { getSubCollection } from "@/hooks/getSubCollection"
+import { IFetchSessions, IPosts, ISessions } from "@/app/type"
 import { FaStar } from 'react-icons/fa'
 import PostTags from "./PostTags"
 import Link from "next/link"
+import { fetchNoteData } from "@/hooks/fetchNoteData"
+import { fetchData } from "@/hooks/fetchData"
+import { replaceSpacesWithHyphens } from "@/utils/replaceSpacesWithHyphens"
 
 type props = {
     post: IPosts
@@ -13,8 +14,11 @@ type props = {
 
 
 export async function Card({ post, preview }: props) {
-    const note = await getSubCollection<{ note: string }[]>(post.title, 'nota')
-    const types = post.sessions.map(async (item) => await getDocData<ISessions>('sessions', item))
+    const note = await fetchNoteData<{ note: string }[]>(replaceSpacesWithHyphens(post.title) as string)
+    const types = post.sessions.map(async (item) => {
+        const data = await fetchData<ISessions>('sessions', { byId: item })
+        return data
+    })
     const tags = await Promise.all(types)
 
     return (
@@ -42,7 +46,7 @@ export async function Card({ post, preview }: props) {
                 <span className="text-md lg:text-lg">
                     {post.subtitle}
                 </span>
-                {note && (
+                {note?.[0]?.note && (
                     <div className="flex items-center mt-3">
                         {note?.[0]?.note && [1, 2, 3, 4, 5].map((value) => (
                             <FaStar
@@ -50,7 +54,7 @@ export async function Card({ post, preview }: props) {
                                 className={`${value <= Number(note?.[0].note) ? 'text-yellow-400' : 'text-gray-400'}`}
                             />
                         ))}
-                        
+
                     </div>
                 )}
             </div>

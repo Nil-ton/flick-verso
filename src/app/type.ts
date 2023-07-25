@@ -31,6 +31,12 @@ export type ISessions = {
     updatedAt: string
 }
 
+export type IFetchSessions = {
+    sessions: ISessions[],
+    next_start_after?: string
+}
+
+
 
 export interface AffiliatedLink {
     affiliatedLink: string;

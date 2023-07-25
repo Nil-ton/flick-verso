@@ -1,15 +1,17 @@
-import { IPosts } from "@/app/type"
+import { IFetchPosts, IPosts } from "@/app/type"
 import Pagination from "@/components/Pagination"
 import { TablePostagens } from "@/components/TablePostagens"
-import { getData } from "@/hooks/getData"
-import { useEffect, useState } from "react"
+import { Suspense, useEffect, useState } from "react"
 import { redirect, useRouter, useSearchParams } from 'next/navigation'
+import { fetchData } from "@/hooks/fetchData"
 
 
 export default async function Postagens() {
-    const posts = await getData<IPosts[]>('posts', 1)
+    const data = await fetchData<IFetchPosts>('posts')
 
     return <>
-        <TablePostagens posts={posts} currentPage={1} />
+        <Suspense fallback={<p>Loading...</p>}>
+            <TablePostagens posts={data?.posts} currentPage={1} />
+        </Suspense>
     </>
 }
