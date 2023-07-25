@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 
 
 export default async function Home() {
-    const data = await fetchData<IFetchPosts>('posts', { sessions: "review" })
+    const data = await fetchData<IFetchPosts>('posts', { sessions: "reviews" })
     const lastPosts = data?.posts?.slice(0, 3)
     const slicePosts = data?.posts?.slice(3)
 
@@ -26,7 +26,7 @@ export default async function Home() {
 
             {data?.posts?.length === 10 && (
                 <Suspense fallback={<p>Loading...</p>}>
-                    <PaginationScroll sessions="review" next_start_after={data?.next_start_after} />
+                    <PaginationScroll sessions="reviews" next_start_after={data?.next_start_after} />
                 </Suspense>
             )}
         </div >
