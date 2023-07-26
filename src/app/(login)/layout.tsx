@@ -1,4 +1,6 @@
+import { ToastContainer } from 'react-toastify'
 import '../globals.css'
+import 'react-toastify/dist/ReactToastify.css';
 
 export const metadata = {
   title: 'Next.js',
@@ -14,6 +16,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         {children}
+        <ToastContainer theme='colored' />
       </body>
     </html>
   )

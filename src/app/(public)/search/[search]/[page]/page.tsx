@@ -1,9 +1,7 @@
 import { IPosts } from "@/app/type";
 import { Card } from "@/components/Card";
 import { LastNews } from "@/components/LastNews";
-import { getData } from "@/hooks/getData";
-import { getDataWithFilter } from "@/hooks/getDataWithFilter";
-import { db } from "@/service/firebase";
+import { fetchData } from "@/hooks/fetchData";
 import { replaceSpacesWithHyphens } from "@/utils/replaceSpacesWithHyphens";
 import { doc, getDoc, setDoc, where } from "firebase/firestore";
 import { Metadata } from "next";
@@ -22,7 +20,7 @@ export default async function Home({ params }: props) {
 
     const page = Number(params.page)
     const pageSize = 10
-    const posts = await getDataWithFilter<IPosts[]>('posts', { page, pageSize, where: where('keywords', 'array-contains', searchTerm) })
+    const posts = await fetchData<IPosts[]>('posts', { keywords: searchTerm })
 
     if (!page) {
         return redirect('/')

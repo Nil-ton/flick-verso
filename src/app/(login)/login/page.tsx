@@ -6,6 +6,8 @@ import { MouseEvent, useRef, useState } from "react"
 import { useRouter } from 'next/navigation';
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/service/firebase"
+import { verifyToken } from "@/hooks/verifyToken"
+import { toast } from "react-toastify"
 
 
 
@@ -25,7 +27,6 @@ export default function Adm() {
     const { register, handleSubmit, formState: { errors }, setError } = useForm<ILoginUseFormSchema>({ resolver: zodResolver(loginUseFormSchema) })
 
     const login = async (data: any) => {
-
         const { email, password } = data
         signInWithEmailAndPassword(auth, email, password)
             .then(async (userCredential) => {
@@ -33,13 +34,15 @@ export default function Adm() {
                 const token = await user.getIdToken()
                 if (token && typeof window !== "undefined") {
                     window.localStorage.setItem('@token', token)
+                    const res = await verifyToken(token)
+                    console.log(res)
+                    toast.loading('Redirecionando...')
                     router.push('/postagens')
                 }
             })
             .catch((error) => {
-                const errorCode = error.code;
                 const errorMessage = error.message;
-                console.log({ errorCode, errorMessage })
+                toast.error(errorMessage)
             });
     }
 

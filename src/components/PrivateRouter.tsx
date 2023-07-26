@@ -2,7 +2,6 @@
 
 import { useRouter } from "next/navigation"
 import { ReactNode, useCallback, useEffect } from "react"
-import { isAuth } from "@/service/auth";
 
 type props = {
     children: ReactNode
@@ -13,8 +12,6 @@ export function PrivateRouter({ children }: props) {
     const token = typeof window !== "undefined" ? window.localStorage.getItem('@token') : null
 
     useEffect(() => {
-        isAuth()
-
         if (!token) {
             router.push('/login')
         }

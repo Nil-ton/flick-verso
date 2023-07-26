@@ -1,7 +1,6 @@
 'use client'
 
 import { RichTextEditor } from "@/components/RichText";
-import { getData } from "@/hooks/getData";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
@@ -9,13 +8,13 @@ import { z } from "zod";
 import Select from "react-select";
 import { customStyles } from "@/utils/selectStyle";
 import { Timestamp, doc, getDoc, setDoc, deleteDoc } from "firebase/firestore";
-import { auth, db } from "@/service/firebase";
+import { auth } from "@/service/firebase";
 import { toast } from 'react-toastify'
-import { getDocData } from "@/hooks/getDoc";
-import { getSubCollection } from "@/hooks/getSubCollection";
 import { usePathname, useRouter } from "next/navigation";
 import { replaceSpacesWithHyphens } from "@/utils/replaceSpacesWithHyphens";
 import { IPosts } from "@/app/type";
+import { fetchNoteData } from "@/hooks/fetchNoteData";
+import { fetchData } from "@/hooks/fetchData";
 
 const selectOption = z.object({
     value: z.string(),
@@ -26,19 +25,22 @@ const noteOption = z.object({
     label: z.number()
 })
 
+const authorSchema = z.object({ value: z.string(), label: z.string(), socialMedia: z.string() })
+
 
 const schema = z.object({
     title: z.string().max(100, 'No máximo 100 caracteres').nonempty({ message: 'O campo Título é obrigatório' }),
     subtitle: z.string().max(150, 'No máximo 150 caracteres').nonempty({ message: 'O campo Subtítulo é obrigatório' }),
     thumbnail: z.string().nonempty({ message: 'O campo Subtítulo é obrigatório' }),
     description: z.string().nonempty({ message: 'O campo Descrição é obrigatório' }),
-    keywords: z.string().nonempty({ message: 'O campo Palavras-chave é obrigatório' }),
-    sessions: z.array(selectOption),
-    type: selectOption,
-    note: noteOption.optional(),
-    richText: z.string()
+    keywords: z.string().nonempty({ message: 'O campo Palavras-chave é obrigatório' }).transform((data) => data.split(',').map((item) => item.toLowerCase().trim())),
+    sessions: z.array(selectOption).transform((data) => data.map((item) => item.value)),
+    type: selectOption.transform((data) => data.value),
+    note: noteOption.optional().transform((data) => data?.value),
+    richText: z.string(),
+    author: authorSchema
 }).refine((value) => {
-    const typeValue = value.type?.value;
+    const typeValue = value.type;
     return typeValue !== 'review' || (typeValue === 'review' && value.note !== undefined);
 }, {
     message: 'O campo Nota é obrigatório para o tipo "review"',
@@ -55,7 +57,7 @@ type props = {
 }
 
 export default function Postagens({ params }: props) {
-    const { register, handleSubmit, formState: { errors }, control, watch, resetField, setValue } = useForm<FormSchema>({
+    const { register, handleSubmit, formState: { errors }, control, watch, resetField, setValue, getValues } = useForm<FormSchema>({
         resolver: zodResolver(schema),
     });
 
@@ -65,74 +67,77 @@ export default function Postagens({ params }: props) {
     const router = useRouter()
     const pathname = usePathname()
     const path = pathname.split('/')[3]
-    const subCollection = getSubCollection<{ note: string }[]>(params.id, 'nota')
     const [isSubmit, setIsSubmit] = useState(false)
 
+    // @ts-expect-error
     const needNote = watch('type')?.value === 'review'
-    const watchType = watch('type')
+    // @ts-expect-error
+    const watchType = watch('type')?.value
+
+    const updateCache = async (session: string, keyword: string) => {
+        await fetch(`${process.env.NEXT_PUBLIC_API}/update_cache/posts?sessions=${session}&keywords=${keyword}`);
+    };
 
     const onSubmit = async (data: FormSchema) => {
         setIsSubmit(true)
         try {
-            const author = await getDocData<any>('admins', null, auth.currentUser?.uid)
-            const value = { value: author.name, label: author.name, socialMedia: author.socialMedia }
-            const dataDTO = {
-                ...data,
-                keywords: data.keywords.split(',').map(item => item.toLowerCase().trim()),
-                sessions: data.sessions.map((item) => item.value),
-                type: data.type.value,
-                author: value,
-                updatedAt: Timestamp.now(),
+            console.log(data)
+            if (typeof window !== 'undefined') {
+                const token = localStorage.getItem('@token')
+                await fetch(`${process.env.NEXT_PUBLIC_API}/update/posts`, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data),
+                })
+                await fetch(`${process.env.NEXT_PUBLIC_API}/update/posts`, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data),
+                })
+                data.sessions.forEach((session, i) => updateCache(session, data.keywords[i]));
+                data.keywords.forEach((keyword, i) => updateCache(data.sessions[i], keyword));
+                toast.success('Editado com sucesso.')
             }
 
-            delete dataDTO.note
-            const idCollection = replaceSpacesWithHyphens(data.title)
-            const docRefOriginal = doc(db, 'posts', params.id);
-            const docRef = doc(db, 'posts', idCollection as string);
-            const docSnapshot = await getDoc(docRef);
-
-            if (path === idCollection) {
-                await setDoc(docRef, dataDTO, { merge: true });
-
-                if (data.note) {
-                    const subcolecaoRef = doc(db, "posts", `${idCollection}/nota/${auth.currentUser?.uid}`);
-                    await setDoc(subcolecaoRef, { note: data.note?.value });
-                }
-                await fetch(`/api/revalidate?path=/`)
-                return router.push('/postagens')
-            }
-
-            if (docSnapshot.exists()) {
-                return toast.error('Já existe uma postagem com esse nome.')
-            }
-
-            await deleteDoc(docRefOriginal)
-
-            await setDoc(docRef, { ...dataDTO, createdAt: Timestamp.now() });
-
-            if (data.note) {
-                const subcolecaoRef = doc(db, "posts", `${idCollection}/nota/${auth.currentUser?.uid}`);
-                await setDoc(subcolecaoRef, { note: data.note?.value });
-            }
-
-            await fetch(`/api/revalidate?path=/`)
+            await fetch(`https://flickverso.com.br/api/revalidate?path=/`)
             router.push('/postagens')
         } catch (error: any) {
-            return toast.error('Error ao atualizar, tente novamente.')
+            toast.error(error.message)
         }
         setIsSubmit(false)
     };
 
     useEffect(() => {
-        if (watchType?.value !== 'review') {
+        if (typeof window !== 'undefined') {
+            (async () => {
+                try {
+                    const token = localStorage.getItem('@token')
+                    const author = await fetchData<any>('admins', { byId: auth.currentUser?.uid, token: token })
+                    const value = { value: author?.name, label: author?.name, socialMedia: author?.socialMedia }
+                    setValue('author', value)
+                } catch (error) {
+                    localStorage.clear()
+                }
+            })()
+        }
+    }, [])
+
+    useEffect(() => {
+        if (watchType !== 'review') {
             resetField('note')
         }
-    }, [resetField, watchType?.value])
+    }, [resetField, watchType])
 
     useEffect(() => {
         (async () => {
-            const sessions = await getData<any>('sessions')
-            setSessionOp(sessions?.map((item: any) => (
+            const sessions = await fetchData<any>('sessions')
+            setSessionOp(sessions?.sessions?.map((item: any) => (
                 {
                     value: item.uid,
                     label: item.title
@@ -143,8 +148,8 @@ export default function Postagens({ params }: props) {
 
     useEffect(() => {
         (async () => {
-            const type = await getData<any>('type_post')
-            setTypeOp(type?.map((item: any) => (
+            const type = await fetchData<any>('type_post')
+            setTypeOp(type?.type_post?.map((item: any) => (
                 {
                     value: item.uid,
                     label: item.title
@@ -156,11 +161,12 @@ export default function Postagens({ params }: props) {
 
     useEffect(() => {
         (async () => {
-            const nota = await subCollection
-            if (nota[0]) {
+            const nota = await fetchNoteData<{ note: string }[]>(replaceSpacesWithHyphens(params.id) as string)
+            if (nota?.[0]) {
                 const is = noteOp?.find((op: any) => {
                     return Number(nota[0]?.note) === Number(op.value)
                 })
+                // @ts-expect-error
                 return setValue('note', is)
             }
         })()
@@ -168,7 +174,7 @@ export default function Postagens({ params }: props) {
 
     useEffect(() => {
         (async () => {
-            const data = await getDocData<IPosts>('posts', params.id)
+            const data = await fetchData<IPosts>('posts', { byId: params.id })
             const entities = Object.entries(data || [])
             entities.forEach((item: any) => {
                 switch (item[0]) {

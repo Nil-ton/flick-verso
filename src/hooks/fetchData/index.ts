@@ -1,42 +1,33 @@
-type props = {
-    limit?: number
-    next_start_after?: string
-    sessions?: string
-    byId?: string
-    keywords?: string
-}
-const url = process.env.NEXT_PUBLIC_API
-export async function fetchData<T>(collectionName: string, params?: props) {
-    try {
-        let data: unknown[] = []
-
-        if (params?.keywords) {
-            const resFetch = await fetch(`${url}/${collectionName}?keywords=${params.keywords}`)
-            const dataFetch = await resFetch.json()
-            return dataFetch as T
-        }
-
-        if (params?.byId) {
-            const resFetch = await fetch(`${url}/${collectionName}/${params.byId}`)
-            const dataFetch = await resFetch.json()
-            return dataFetch as T
-        }
-
-        if (params?.next_start_after) {
-            const resFetch = await fetch(`${url}/${collectionName}${params?.sessions ? `?sessions=${params?.sessions}&` : '?'}start_after=${params?.next_start_after}&limit=${params?.limit ? params?.limit : 10}`)
-            const dataFetch = await resFetch.json()
-            data = dataFetch
-        }
-        if (!params?.next_start_after) {
-            const resFetch = await fetch(`${url}/${collectionName}${params?.sessions ? `?sessions=${params?.sessions}&` : '?'}limit=${params?.limit ? params?.limit : 10}`)
-            const dataFetch = await resFetch.json()
-            data = dataFetch
-        }
-
-
-        return data as T
-    } catch (error) {
-        console.log('Erro ao obter dados:' + collectionName, error);
-    }
+type Props = {
+    limit?: number;
+    next_start_after?: string;
+    sessions?: string;
+    byId?: string;
+    keywords?: string;
+    token?: string | null;
 };
 
+const url = process.env.NEXT_PUBLIC_API;
+
+export async function fetchData<T>(collectionName: string, params?: Props) {
+    try {
+        let query = `${url}/${collectionName}`;
+        if (params?.token) {
+            query += `/${params.byId}`;
+        } else if (params?.keywords) {
+            query += `?keywords=${params.keywords}`;
+        } else if (params?.byId) {
+            query += `/${params.byId}`;
+        } else {
+            query += '?';
+            if (params?.sessions) query += `sessions=${params.sessions}&`;
+            if (params?.next_start_after) query += `start_after=${params.next_start_after}&`;
+            query += `limit=${params?.limit || 10}`;
+        }
+
+        const res = await fetch(query, params?.token ? { headers: { 'Authorization': `Bearer ${params.token}` } } : undefined);
+        return (await res.json()) as T;
+    } catch (error) {
+        console.log(`Error fetching data from ${collectionName}:`, error);
+    }
+}
