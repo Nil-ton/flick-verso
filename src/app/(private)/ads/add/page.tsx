@@ -12,7 +12,6 @@ import { auth, db } from "@/service/firebase";
 import { toast } from 'react-toastify'
 import { replaceSpacesWithHyphens } from "@/utils/replaceSpacesWithHyphens";
 import { useRouter } from "next/navigation";
-import { getDocData } from "@/hooks/getDoc";
 
 const selectOption = z.object({
     value: z.string(),
