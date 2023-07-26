@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import { Card } from "@/components/Card";
 import { LastNews } from "@/components/LastNews";
-import { getData } from "@/hooks/getData";
 import { IPosts } from "@/app/type";
 
 type props = {
