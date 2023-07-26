@@ -1,7 +1,6 @@
 
 import { HamburguerMenu } from "../humburguerMenu/HamburguerMenu ";
 import { useRouter } from "next/navigation";
-import { getData } from "@/hooks/getData";
 import Link from "next/link";
 import { FaInstagram, FaSearch, FaTwitter } from "react-icons/fa";
 import { IFetchSessions, ISessions } from "@/app/type";
