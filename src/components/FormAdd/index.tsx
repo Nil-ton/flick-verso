@@ -73,28 +73,19 @@ export function FormAdd({ typeOp, sessionsOp }: props) {
 
     const onSubmit = async (data: FormSchema) => {
         setIsSubmit(true)
-        const token = localStorage.getItem('@token')
-        const author = await fetchData<any>('admins', { byId: auth.currentUser?.uid, token: token })
-        const value = { value: author?.name, label: author?.name, socialMedia: author?.socialMedia }
-        const dataDTO = { author: value, ...data }
         try {
             if (typeof window !== 'undefined') {
                 const token = localStorage.getItem('@token')
-                await fetch(`${process.env.NEXT_PUBLIC_API}/update/posts`, {
-                    method: 'PUT',
+                const author = await fetchData<any>('admins', { byId: auth.currentUser?.uid, token: token })
+                const value = { value: author?.name, label: author?.name, socialMedia: author?.socialMedia }
+                const dataDTO = { author: value, ...data }
+                await fetch(`${process.env.NEXT_PUBLIC_API}/create/posts`, {
+                    method: 'POST',
                     headers: {
                         'Authorization': `Bearer ${token}`,
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify(dataDTO),
-                })
-                await fetch(`${process.env.NEXT_PUBLIC_API}/update/posts`, {
-                    method: 'PUT',
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(data),
                 })
                 data.sessions.forEach((session, i) => updateCache(session, data.keywords[i]));
                 data.keywords.forEach((keyword, i) => updateCache(data.sessions[i], keyword));
