@@ -15,6 +15,7 @@ type props = {
 
 export async function generateMetadata({ params }: props): Promise<Metadata> {
     const post = await fetchData<IPosts>('posts', { byId: params.postId })
+    console.log(post?.uid, 'aqui')
 
     return {
         title: post?.title,

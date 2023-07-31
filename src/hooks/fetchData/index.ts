@@ -1,3 +1,5 @@
+import { replaceSpacesWithHyphens } from "@/utils/replaceSpacesWithHyphens";
+
 type Props = {
     limit?: number;
     next_start_after?: string;
@@ -26,7 +28,12 @@ export async function fetchData<T>(collectionName: string, params?: Props) {
         }
 
         const res = await fetch(query, params?.token ? { headers: { 'Authorization': `Bearer ${params.token}` } } : undefined);
-        return (await res.json()) as T;
+        const data = await res.json()
+        const posts = { ...data, uid: replaceSpacesWithHyphens(data.title) }
+        if (collectionName === 'posts' && params?.byId) {
+            return posts as T
+        }
+        return (data) as T;
     } catch (error) {
         console.log(`Error fetching data from ${collectionName}:`, error);
     }
